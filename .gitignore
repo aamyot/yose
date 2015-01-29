@@ -1,11 +1,7 @@
-
-### Gradle template
 .gradle
 .idea
 build/
 yose-the-game.iml
 
-# Ignore Gradle GUI config
-gradle-app.setting
 
 
