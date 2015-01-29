@@ -1,12 +1,12 @@
-repositories {
-    mavenCentral()
-}
-
 apply plugin: 'java'
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
 version = '1.0'
+
+repositories {
+    mavenCentral()
+}
 
 def libs = [
         hamcrest_all      : 'org.hamcrest:hamcrest-all:1.3',
