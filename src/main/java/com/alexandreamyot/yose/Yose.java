@@ -32,4 +32,5 @@ public class Yose {
     public void stop() throws IOException {
         server.stop();
     }
+
 }
