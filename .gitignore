@@ -2,7 +2,7 @@
 gradle
 .idea
 build/
-yose-the-game.iml
+*.iml
 gradlew*
 
 
