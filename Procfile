@@ -1,1 +1,1 @@
-web: ./build/install/yose/bin/yose
+web: ./build/install/yose/bin/yose $PORT
