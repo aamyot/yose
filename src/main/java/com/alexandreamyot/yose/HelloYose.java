@@ -12,10 +12,10 @@ public class HelloYose implements Application {
         response.contentType(MimeTypes.HTML);
         response.body(
                 "<html>" +
-                        "<body>" +
-                        "   <div>Hello Yose</div>" +
-                        "</body>" +
-                        "</html>"
+                "<body>" +
+                "   <div>Hello Yose</div>" +
+                "</body>" +
+                "</html>"
         );
     }
 }
