@@ -49,7 +49,7 @@ public class StartChallengesTest {
     public void homeIncludesALinkToAGitHubRepository() throws IOException {
         Response response = given().get("http://localhost:7001");
 
-        assertThat(response.asString(), containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">Github</a>"));
+        assertThat(response.asString(), containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">GitHub</a>"));
     }
 
 
