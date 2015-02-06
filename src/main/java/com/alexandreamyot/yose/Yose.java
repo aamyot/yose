@@ -32,7 +32,11 @@ public class Yose {
     }
 
     public static void main(String[] args) throws IOException {
-        new Yose(parseInt(args[0])).start();
+        new Yose(port(args)).start();
+    }
+
+    private static int port(String[] args) {
+        return args.length > 0 ? parseInt(args[0]) : 8888;
     }
 
 }
