@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class HomeTest {
+public class StartChallengesTest {
 
     private Yose server ;
 
@@ -29,12 +29,28 @@ public class HomeTest {
     }
 
     @Test
-    public void acceptsRequestAndReturns200() {
+    public void homeContainsTheStringHelloYose() {
         Response response = given().get("http://localhost:7001");
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("text/html"));
         assertThat(response.asString(), containsString("Hello Yose"));
     }
+
+    @Test
+    public void respondsAliveToAPing() throws IOException {
+        Response response = given().get("http://localhost:7001/ping");
+
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.asString(), equalTo("{ \"alive\" : true }"));
+    }
+
+    @Test
+    public void homeIncludesALinkToAGitHubRepository() throws IOException {
+        Response response = given().get("http://localhost:7001");
+
+        assertThat(response.asString(), containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">Github</a>"));
+    }
+
 
 }
