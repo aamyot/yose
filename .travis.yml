@@ -3,5 +3,5 @@ jdk:
   - oraclejdk8
 deploy:
   provider: heroku
-  app: yose
+  app: yose-aamyot
   api_key: 6d7e3e04-eb0c-4ed8-a5d1-2cd0c926619f
