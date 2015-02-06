@@ -29,7 +29,7 @@ dependencies {
 }
 
 mainClassName = "com.alexandreamyot.yose.Yose"
-applicationName = 'jyose'
+applicationName = 'yose'
 
 if (!project.hasProperty('port')) {
     ext.port = 8888
