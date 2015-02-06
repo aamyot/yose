@@ -6,7 +6,6 @@ import com.vtence.molecule.routing.DynamicRoutes;
 
 import java.io.IOException;
 
-import static com.vtence.molecule.http.HttpStatus.OK;
 import static java.lang.Integer.parseInt;
 
 public class Yose {
@@ -20,8 +19,7 @@ public class Yose {
     public void start() throws IOException {
         server.add(new Failsafe());
         server.start(new DynamicRoutes() {{
-            get("/").to((request, response) -> response.status(OK));
-            get("/hello").to(new HelloYose());
+            get("/").to(new HelloYose());
             get("/ping").to(new Ping());
         }});
     }

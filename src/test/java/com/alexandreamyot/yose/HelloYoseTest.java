@@ -32,12 +32,6 @@ public class HelloYoseTest {
         Response response = given().get("http://localhost:7001");
 
         assertThat(response.statusCode(), equalTo(200));
-    }
-
-    @Test
-    public void returnsHelloYoseInTheHtmlBody() {
-        Response response = given().get("http://localhost:7001/hello");
-
         assertThat(response.contentType(), equalTo("text/html"));
         assertThat(response.asString(), containsString("Hello Yose"));
     }
