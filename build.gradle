@@ -4,7 +4,6 @@ apply plugin: 'application'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
-mainClassName = "com.alexandreamyot.yose.Yose"
 
 repositories {
     mavenCentral()
@@ -27,6 +26,17 @@ dependencies {
     testCompile libs.junit
     testCompile libs.mockito
     testCompile libs.rest_assured
+}
+
+mainClassName = "com.alexandreamyot.yose.Yose"
+applicationName = 'jyose'
+
+if (!project.hasProperty('port')) {
+    ext.port = 8888
+}
+
+run {
+    args port
 }
 
 task stage(dependsOn: ['clean', 'installApp'])

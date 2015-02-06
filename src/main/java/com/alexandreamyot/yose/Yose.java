@@ -7,6 +7,7 @@ import com.vtence.molecule.middlewares.Failsafe;
 import java.io.IOException;
 
 import static com.vtence.molecule.http.HttpStatus.OK;
+import static java.lang.Integer.parseInt;
 
 public class Yose {
 
@@ -36,7 +37,7 @@ public class Yose {
     }
 
     public static void main(String[] args) throws IOException {
-        new Yose(8080).start();
+        new Yose(parseInt(args[0])).start();
     }
 
 }
