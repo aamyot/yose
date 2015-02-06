@@ -15,7 +15,7 @@ public class Home implements Application {
                 "<body>" +
                 "   <div>Hello Yose</div>" +
                 "   <br/>" +
-                "   <a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">Github</a>" +
+                "   <a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">GitHub</a>" +
                 "</body>" +
                 "</html>"
         );
