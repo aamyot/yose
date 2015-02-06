@@ -1,7 +1,8 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 deploy:
   provider: heroku
   app: yose-aamyot
-  api_key: 6d7e3e04-eb0c-4ed8-a5d1-2cd0c926619f
+  api_key:
+    secure: lIPNX47Fiq21WGNSqjYzbrMidvg4wKrT8JYOLYfyUatq+wzsNM3w4UpYhAEIqxTG3UWzFyDG+H1UIZdYFETxTG8lVk02UE5UoQDkWZXpRV8B42n88wXHeqASzflAr2eXdYAu5Z+Ge8BjQygjmz4vblq6thyRTtJAF77k2kf/Drc=
