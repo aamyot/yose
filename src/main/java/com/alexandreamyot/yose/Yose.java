@@ -1,8 +1,8 @@
 package com.alexandreamyot.yose;
 
 import com.vtence.molecule.WebServer;
-import com.vtence.molecule.http.MimeTypes;
 import com.vtence.molecule.middlewares.Failsafe;
+import com.vtence.molecule.routing.DynamicRoutes;
 
 import java.io.IOException;
 
@@ -19,17 +19,11 @@ public class Yose {
 
     public void start() throws IOException {
         server.add(new Failsafe());
-        server.start((request, response) -> {
-            response.body(
-                    "<html>" +
-                    "<body>" +
-                    "   <div>Hello Yose</div>" +
-                    "</body>" +
-                    "</html>"
-            );
-            response.contentType(MimeTypes.HTML);
-            response.status(OK);
-        });
+        server.start(new DynamicRoutes() {{
+            get("/").to((request, response) -> response.status(OK));
+            get("/hello").to(new HelloYose());
+            get("/ping").to(new Ping());
+        }});
     }
 
     public void stop() throws IOException {

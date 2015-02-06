@@ -8,11 +8,10 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class HelloYoseTest {
+public class PingTest {
 
     private Yose server ;
 
@@ -28,18 +27,11 @@ public class HelloYoseTest {
     }
 
     @Test
-    public void acceptsRequestAndReturns200() {
-        Response response = given().get("http://localhost:7001");
+    public void respondsAliveInJsonBody() throws IOException {
+        Response response = given().get("http://localhost:7001/ping");
 
-        assertThat(response.statusCode(), equalTo(200));
-    }
-
-    @Test
-    public void returnsHelloYoseInTheHtmlBody() {
-        Response response = given().get("http://localhost:7001/hello");
-
-        assertThat(response.contentType(), equalTo("text/html"));
-        assertThat(response.asString(), containsString("Hello Yose"));
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.asString(), equalTo("{ \"alive\" : true }"));
     }
 
 }
