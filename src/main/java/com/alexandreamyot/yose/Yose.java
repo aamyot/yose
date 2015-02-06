@@ -33,7 +33,7 @@ public class Yose {
         server.stop();
     }
 
-    public static void main(String... args) throws IOException {
+    public static void main(String[] args) throws IOException {
         new Yose(8080).start();
     }
 
