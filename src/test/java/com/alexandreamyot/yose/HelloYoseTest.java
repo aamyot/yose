@@ -29,7 +29,7 @@ public class HelloYoseTest {
     }
 
     @Test
-    public void returns200ForAnyRequest() {
+    public void acceptsRequestAndReturns200() {
         Response response = given().get("http://localhost:7001");
 
         assertThat(response.statusCode(), equalTo(200));

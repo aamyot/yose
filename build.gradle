@@ -1,8 +1,10 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
+mainClassName = "com.alexandreamyot.yose.Yose"
 
 repositories {
     mavenCentral()
@@ -26,3 +28,5 @@ dependencies {
     testCompile libs.mockito
     testCompile libs.rest_assured
 }
+
+task stage(dependsOn: ['clean', 'installApp'])
