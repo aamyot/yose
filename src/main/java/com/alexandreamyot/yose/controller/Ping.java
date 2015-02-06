@@ -1,4 +1,4 @@
-package com.alexandreamyot.yose;
+package com.alexandreamyot.yose.controller;
 
 import com.vtence.molecule.Application;
 import com.vtence.molecule.Request;

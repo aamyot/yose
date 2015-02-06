@@ -1,5 +1,6 @@
-package com.alexandreamyot.yose;
+package com.alexandreamyot.yose.challenges;
 
+import com.alexandreamyot.yose.Yose;
 import com.jayway.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
