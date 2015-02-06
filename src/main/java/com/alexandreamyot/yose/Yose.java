@@ -2,6 +2,7 @@ package com.alexandreamyot.yose;
 
 import com.vtence.molecule.WebServer;
 import com.vtence.molecule.http.MimeTypes;
+import com.vtence.molecule.middlewares.Failsafe;
 
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ public class Yose {
     }
 
     public void start() throws IOException {
+        server.add(new Failsafe());
         server.start((request, response) -> {
             response.body(
                     "<html>" +
