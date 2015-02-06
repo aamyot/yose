@@ -18,8 +18,9 @@ public class Yose {
 
     public void start() throws IOException {
         server.add(new Failsafe());
+
         server.start(new DynamicRoutes() {{
-            get("/").to(new HelloYose());
+            get("/").to(new Home());
             get("/ping").to(new Ping());
         }});
     }
