@@ -8,16 +8,15 @@ import com.vtence.molecule.routing.DynamicRoutes;
 import com.vtence.molecule.templating.JMustacheRenderer;
 import com.vtence.molecule.templating.Templates;
 
+import java.io.File;
 import java.io.IOException;
 
-import static com.alexandreamyot.yose.support.Resources.locationOf;
 import static java.lang.Integer.parseInt;
 
 public class Yose {
 
-    private Templates templates = new Templates(new JMustacheRenderer().fromDir(locationOf("views")).extension("html"));
-
     private final WebServer server;
+    private final Templates templates = new Templates(new JMustacheRenderer().fromDir(new File("src/main/webapp", "views")).extension("html"));
 
     public Yose(int port) {
         server = WebServer.create(port);
@@ -43,7 +42,4 @@ public class Yose {
     private static int port(String[] args) {
         return args.length > 0 ? parseInt(args[0]) : 8888;
     }
-
-
-
 }
