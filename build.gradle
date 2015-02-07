@@ -46,6 +46,10 @@ dependencies {
 mainClassName = "com.alexandreamyot.yose.Yose"
 applicationName = 'yose'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true // coveralls plugin depends on xml format report
