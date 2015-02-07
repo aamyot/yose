@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class PortfolioChallengesTest {
@@ -28,9 +29,18 @@ public class PortfolioChallengesTest {
     }
 
     @Test
-    public void homeIncludesALinkToAGitHubRepository() throws IOException {
+    public void homeIncludesALinkToMyContact() throws IOException {
         Response response = given().get("http://localhost:7001");
 
         assertThat(response.asString(), containsString("<a id=\"contact-me-link\" href=\"http://ca.linkedin.com/in/alexandreamyot\">Contact</a>"));
+    }
+
+    @Test
+    public void homeIncludesALinkToThePinkChallenge() throws IOException {
+        Response response = given().get("http://localhost:7001");
+
+
+        assertThat(response.contentType(), equalTo("text/html"));
+        assertThat(response.asString(), containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping challenge</a>"));
     }
 }
