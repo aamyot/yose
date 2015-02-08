@@ -41,6 +41,6 @@ public class PortfolioChallengesTest {
 
 
         assertThat(response.contentType(), equalTo("text/html"));
-        assertThat(response.asString(), containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping challenge</a>"));
+        assertThat(response.asString(), containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping</a>"));
     }
 }
