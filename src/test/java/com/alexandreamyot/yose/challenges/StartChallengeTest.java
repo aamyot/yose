@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class PortfolioChallengesTest {
+public class StartChallengeTest {
 
     private Yose server ;
 
@@ -29,18 +29,29 @@ public class PortfolioChallengesTest {
     }
 
     @Test
-    public void homeIncludesALinkToMyContact() throws IOException {
+    public void homeContainsTheStringHelloYose() {
         Response response = given().get("http://localhost:7001");
 
-        assertThat(response.asString(), containsString("<a id=\"contact-me-link\" href=\"http://ca.linkedin.com/in/alexandreamyot\">Contact</a>"));
+        assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.contentType(), equalTo("text/html"));
+        assertThat(response.asString(), containsString("Hello Yose"));
     }
 
     @Test
-    public void homeIncludesALinkToThePinkChallenge() throws IOException {
+    public void homeIncludesALinkToAGitHubRepository() {
         Response response = given().get("http://localhost:7001");
 
-
-        assertThat(response.contentType(), equalTo("text/html"));
-        assertThat(response.asString(), containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping</a>"));
+        assertThat(response.asString(), containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">GitHub</a>"));
     }
+
+    @Test
+    public void respondsAliveToAPing() {
+        Response response = given().get("http://localhost:7001/ping");
+
+        assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.asString(), equalTo("{ \"alive\" : true }"));
+    }
+
+
 }
