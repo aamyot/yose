@@ -31,7 +31,7 @@ public class PrimesTest {
         assertThat(response).hasStatus(HttpStatus.OK)
                             .hasContentType("application/json")
                             .hasBodyText(allOf(jsonPartEquals("number", "8"),
-                                    jsonPartEquals("decomposition", asList(2, 2, 2))));
+                                               jsonPartEquals("decomposition", asList(2, 2, 2))));
     }
 
 }

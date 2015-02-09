@@ -4,6 +4,7 @@ import com.alexandreamyot.yose.Yose;
 import com.jayway.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -38,5 +39,16 @@ public class PrimeFactorsChallengeTest {
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.asString(), allOf(jsonPartEquals("number", "16"),
                                               jsonPartEquals("decomposition", asList(2,2,2,2))));
+    }
+
+    @Test
+    @Ignore
+    public void safeGuard() {
+        Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
+
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.asString(), allOf(jsonPartEquals("number", "any-string"),
+                                              jsonPartEquals("error", "not a number")));
     }
 }

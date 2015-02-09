@@ -16,8 +16,10 @@ public class Primes implements Application {
 
     @Override
     public void handle(Request request, Response response) throws Exception {
-        int number = valueOf(request.parameter("number"));
-        response.body(toJson(new PrimeResult(number, new Pythagoras().primesOf(number))));
+        String number = request.parameter("number");
+
+
+        response.body(toJson(new PrimeResult(valueOf(number), new Pythagoras().primesOf(valueOf(number)))));
         response.contentType(MimeTypes.JSON);
         response.status(OK);
     }
