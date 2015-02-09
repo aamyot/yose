@@ -6,6 +6,8 @@ import com.vtence.molecule.Response;
 import com.vtence.molecule.http.MimeTypes;
 import com.vtence.molecule.templating.Template;
 
+import static com.vtence.molecule.http.HttpStatus.OK;
+
 public class Home implements Application {
 
     public static final Object EMPTY_CONTEXT = new Object();
@@ -19,7 +21,7 @@ public class Home implements Application {
     @Override
     public void handle(Request request, Response response) throws Exception {
         response.contentType(MimeTypes.HTML);
-
+        response.status(OK);
         response.body(view.render(EMPTY_CONTEXT));
     }
 }
