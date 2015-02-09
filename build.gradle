@@ -42,6 +42,7 @@ dependencies {
     compile libs.simple
     compile libs.jmustache
     compile libs.gson
+    testCompile libs.molecule_test
     testCompile libs.hamcrest_all
     testCompile libs.junit
     testCompile libs.json_unit
