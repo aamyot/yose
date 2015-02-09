@@ -31,6 +31,7 @@ def libs = [
         mockito         : 'org.mockito:mockito-all:1.10.19',
         junit           : 'junit:junit:4.11@jar',
         json_unit       : 'net.javacrumbs.json-unit:json-unit:1.5.1',
+        gson            : 'com.google.code.gson:gson:2.3.1',
         rest_assured    : 'com.jayway.restassured:rest-assured:2.4.0',
         no_log          : 'org.slf4j:slf4j-nop:1.7.10'
 ]
@@ -40,6 +41,7 @@ dependencies {
     compile libs.no_log
     compile libs.simple
     compile libs.jmustache
+    compile libs.gson
     testCompile libs.hamcrest_all
     testCompile libs.junit
     testCompile libs.json_unit

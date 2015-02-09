@@ -4,7 +4,6 @@ import com.alexandreamyot.yose.Yose;
 import com.jayway.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,7 +14,6 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 public class PrimeFactorsChallengeTest {
 
     private Yose server ;
@@ -38,6 +36,6 @@ public class PrimeFactorsChallengeTest {
         assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.asString(), allOf(jsonPartEquals("number", "16"),
-                                              jsonPartEquals("decomposition", "[ 2, 2, 2, 2 ]")));
+                                              jsonPartEquals("decomposition", new int[] {2,2,2,2})));
     }
 }
