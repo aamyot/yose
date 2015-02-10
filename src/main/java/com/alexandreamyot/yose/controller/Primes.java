@@ -10,6 +10,7 @@ import java.util.List;
 
 import static com.alexandreamyot.yose.primes.Pythagoras.primesOf;
 import static com.vtence.molecule.http.HttpStatus.OK;
+import static java.lang.Integer.parseInt;
 import static java.lang.Integer.valueOf;
 
 public class Primes implements Application {
@@ -19,8 +20,10 @@ public class Primes implements Application {
         String input = request.parameter("number");
         if (notANumber(input)) {
             response.body(toJson(new NotANumber(input)));
+        } else if (numberIsTooBig(input)) {
+            response.body(toJson(new NumberIsTooBig(input)));
         } else {
-            int number = valueOf(input);
+            int number = parseInt(input);
             response.body(toJson(new Decomposition(number, primesOf(number))));
         }
         response.contentType(MimeTypes.JSON);
@@ -29,6 +32,10 @@ public class Primes implements Application {
 
     private boolean notANumber(String input) {
         return !input.matches("\\d+");
+    }
+
+    private boolean numberIsTooBig(String input) {
+        return valueOf(input) > 1_000_000;
     }
 
     private String toJson(Object result) {
@@ -49,9 +56,18 @@ public class Primes implements Application {
         final String number;
         final String error = "not a number";
 
-        public NotANumber(String number) {
-            this.number = number;
+        public NotANumber(String input) {
+            this.number = input;
         }
 
+    }
+
+    private class NumberIsTooBig {
+        final String number;
+        final String error = "too big number (>1e6)";
+
+        public NumberIsTooBig(String input) {
+            number = input;
+        }
     }
 }

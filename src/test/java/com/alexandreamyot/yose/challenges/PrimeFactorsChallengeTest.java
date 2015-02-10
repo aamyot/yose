@@ -34,20 +34,29 @@ public class PrimeFactorsChallengeTest {
     public void powerOfTwoChallenge() {
         Response response = given().get("http://localhost:7001/primeFactors?number=16");
 
-        assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.asString(), allOf(jsonPartEquals("number", "16"),
                                               jsonPartEquals("decomposition", asList(2,2,2,2))));
     }
 
     @Test
-    public void safeGuard() {
+    public void safeGuardChallenge() {
         Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
 
-        assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.asString(), allOf(jsonPartEquals("number", "any-string"),
                                               jsonPartEquals("error", "not a number")));
     }
 
+    @Test
+    public void bigNumberGuardChallenge() {
+        Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
+
+        assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.asString(), allOf(jsonPartEquals("number", "1000001"),
+                                              jsonPartEquals("error", "too big number (>1e6)")));
+    }
 }
