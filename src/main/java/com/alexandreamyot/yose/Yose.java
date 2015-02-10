@@ -55,6 +55,6 @@ public class Yose {
     }
 
     private static int port(String[] args) {
-        return parseInt(args[0]);
+        return args.length > 0 ? parseInt(args[0]) : 8080;
     }
 }
