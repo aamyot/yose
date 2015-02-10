@@ -23,8 +23,7 @@ public class Primes implements Application {
         } else if (numberIsTooBig(input)) {
             response.body(toJson(new NumberIsTooBig(input)));
         } else {
-            int number = parseInt(input);
-            response.body(toJson(new Decomposition(number, primesOf(number))));
+            response.body(toJson(new Decomposition(input, primesOf(parseInt(input)))));
         }
         response.contentType(MimeTypes.JSON);
         response.status(OK);
@@ -46,8 +45,8 @@ public class Primes implements Application {
         final int number;
         final List<Integer> decomposition;
 
-        public Decomposition(int number, List<Integer> decomposition) {
-            this.number = number;
+        public Decomposition(String number, List<Integer> decomposition) {
+            this.number = parseInt(number);
             this.decomposition = decomposition;
         }
     }
@@ -63,11 +62,11 @@ public class Primes implements Application {
     }
 
     private class NumberIsTooBig {
-        final String number;
+        final int number;
         final String error = "too big number (>1e6)";
 
         public NumberIsTooBig(String input) {
-            number = input;
+            number = parseInt(input);
         }
     }
 }

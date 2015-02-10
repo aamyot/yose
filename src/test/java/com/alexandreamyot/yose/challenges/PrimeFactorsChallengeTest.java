@@ -52,7 +52,7 @@ public class PrimeFactorsChallengeTest {
 
     @Test
     public void bigNumberGuardChallenge() {
-        Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
+        Response response = given().get("http://localhost:7001/primeFactors?number=1000001");
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("application/json"));
