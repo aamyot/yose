@@ -2,6 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/aamyot/yose/badge.svg)](https://coveralls.io/r/aamyot/yose)
 [![Yose score](http://yosethegame.com/players/aamyot/badge.svg)](http://yosethegame.com)
 
+
 YoseTheGame
 ===========
 
