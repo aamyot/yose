@@ -7,11 +7,10 @@ public class Pythagoras {
 
     public static List<Integer> primesOf(int number) {
         List<Integer> primes = new ArrayList<>();
-        if (number > 1) {
-            int prime = 2;
-            while (number % prime == 0) {
+
+        for (int prime = 2; number > 1; prime++) {
+            for (;number % prime == 0; number /= prime) {
                 primes.add(prime);
-                number /= prime;
             }
         }
         return primes;

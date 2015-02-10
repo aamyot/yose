@@ -49,4 +49,5 @@ public class PrimeFactorsChallengeTest {
         assertThat(response.asString(), allOf(jsonPartEquals("number", "any-string"),
                                               jsonPartEquals("error", "not a number")));
     }
+
 }

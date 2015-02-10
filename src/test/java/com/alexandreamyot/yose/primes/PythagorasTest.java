@@ -26,8 +26,13 @@ public class PythagorasTest {
         return asList(new Object[][] {
                 {1, asList()},
                 {2, asList(2)},
+                {3, asList(3)},
                 {4, asList(2,2)},
-                {16, asList(2,2,2,2)}
+                {5, asList(5)},
+                {6, asList(2,3)},
+                {12, asList(2,2,3)},
+                {16, asList(2,2,2,2)},
+                {34, asList(2,17)}
         });
     }
 
