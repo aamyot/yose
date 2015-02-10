@@ -68,6 +68,10 @@ if (!project.hasProperty('port')) {
     ext.port = 8888
 }
 
+if (!project.hasProperty('webroot')) {
+    ext.port = 'src/main/webapp'
+}
+
 run {
     args port
 }

@@ -33,6 +33,6 @@ public class PythagorasTest {
 
     @Test
     public void primesOf() {
-        assertThat(new Pythagoras().primesOf(number), equalTo(primes));
+        assertThat(Pythagoras.primesOf(number), equalTo(primes));
     }
 }

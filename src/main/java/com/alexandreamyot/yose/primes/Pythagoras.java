@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Pythagoras {
 
-    public List<Integer> primesOf(int number) {
+    public static List<Integer> primesOf(int number) {
         List<Integer> primes = new ArrayList<>();
         if (number > 1) {
             int prime = 2;

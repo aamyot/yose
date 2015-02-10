@@ -23,23 +23,31 @@ public class Yose {
     private final Templates templates;
 
     public Yose(int port) {
-        server = WebServer.create(port);
-        webroot = new File("src/main/webapp");
-        templates = new Templates(new JMustacheRenderer().fromDir(new File(webroot, "views")).extension("html"));
+        this.server = WebServer.create(port);
+        this.webroot = new File("src/main/webapp");
+        this.templates = new Templates(new JMustacheRenderer().fromDir(new File(webroot, "views")).extension("html"));
     }
 
     public void start() throws IOException {
         server.add(new Failsafe())
-              .add(new StaticAssets(new FileServer(webroot)).serve("/css"))
-                .start(new DynamicRoutes() {{
-                    get("/").to(new Home(templates.named("home")));
-                    get("/ping").to(new Ping());
-                    get("/primeFactors").to(new Primes());
-                }});
+              .add(staticAssets())
+              .start(routes());
     }
 
     public void stop() throws IOException {
         server.stop();
+    }
+
+    private DynamicRoutes routes() {
+        return new DynamicRoutes() {{
+            get("/").to(new Home(templates.named("home")));
+            get("/ping").to(new Ping());
+            get("/primeFactors").to(new Primes());
+        }};
+    }
+
+    private StaticAssets staticAssets() {
+        return new StaticAssets(new FileServer(webroot)).serve("/css");
     }
 
     public static void main(String[] args) throws IOException {
@@ -47,6 +55,6 @@ public class Yose {
     }
 
     private static int port(String[] args) {
-        return args.length > 0 ? parseInt(args[0]) : 8888;
+        return parseInt(args[0]);
     }
 }

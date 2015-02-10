@@ -4,7 +4,6 @@ import com.alexandreamyot.yose.Yose;
 import com.jayway.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -42,7 +41,6 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    @Ignore
     public void safeGuard() {
         Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
 
