@@ -1,8 +1,8 @@
 package com.alexandreamyot.yose;
 
-import com.alexandreamyot.yose.controller.Home;
-import com.alexandreamyot.yose.controller.Ping;
-import com.alexandreamyot.yose.controller.Primes;
+import com.alexandreamyot.yose.web.Home;
+import com.alexandreamyot.yose.web.Ping;
+import com.alexandreamyot.yose.web.Primes;
 import com.vtence.molecule.WebServer;
 import com.vtence.molecule.middlewares.Failsafe;
 import com.vtence.molecule.middlewares.FileServer;
