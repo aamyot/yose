@@ -5,7 +5,9 @@ jdk:
 
 deploy:
   provider: heroku
-  app: yose-aamyot7Fiq21WGNSqjYzbrMidvg4wKrT8JYOLYfyUatq+wzsNM3w4UpYhAEIqxTG3UWzFyDG+H1UIZdYFETxTG8lVk02UE5UoQDkWZXpRV8B42n88wXHeqASzflAr2eXdYAu5Z+Ge8BjQygjmz4vblq6thyRTtJAF77k2kf/Drc=
+  app: yose-aamyot
+  api_key:
+    secure: lIPNX47Fiq21WGNSqjYzbrMidvg4wKrT8JYOLYfyUatq+wzsNM3w4UpYhAEIqxTG3UWzFyDG+H1UIZdYFETxTG8lVk02UE5UoQDkWZXpRV8B42n88wXHeqASzflAr2eXdYAu5Z+Ge8BjQygjmz4vblq6thyRTtJAF77k2kf/Drc=
 
 after_success:
 - ./gradlew jacocoTestReport coveralls
