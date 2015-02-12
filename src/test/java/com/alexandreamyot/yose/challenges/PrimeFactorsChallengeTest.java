@@ -31,17 +31,17 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    public void powerOfTwoChallenge() {
+    public void decomposesANumberIntoPrimeFactors() {
         Response response = given().get("http://localhost:7001/primeFactors?number=16");
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.asString(), allOf(jsonPartEquals("number", "16"),
-                                              jsonPartEquals("decomposition", asList(2,2,2,2))));
+                                              jsonPartEquals("decomposition", asList(2, 2, 2, 2))));
     }
 
     @Test
-    public void safeGuardChallenge() {
+    public void returnsANotANumberMessageForAString() {
         Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
 
         assertThat(response.statusCode(), equalTo(200));
@@ -51,7 +51,7 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    public void bigNumberGuardChallenge() {
+    public void returnsNumberIsTooBigMessageForANumberGreatherThan1e6() {
         Response response = given().get("http://localhost:7001/primeFactors?number=1000001");
 
         assertThat(response.statusCode(), equalTo(200));
@@ -59,4 +59,21 @@ public class PrimeFactorsChallengeTest {
         assertThat(response.asString(), allOf(jsonPartEquals("number", "1000001"),
                                               jsonPartEquals("error", "too big number (>1e6)")));
     }
+
+    @Test
+    public void decomposesAListOfNumbers() {
+        Response response = given().get("http://localhost:7001/primeFactors?number=16&number=1000001&number=any-string&number=4");
+
+        assertThat(response.statusCode(), equalTo(200));
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.asString(), allOf(jsonPartEquals("[0].number", "16"),
+                                              jsonPartEquals("[0].decomposition", asList(2, 2, 2, 2)),
+                                              jsonPartEquals("[1].number", "1000001"),
+                                              jsonPartEquals("[1].error", "too big number (>1e6)"),
+                                              jsonPartEquals("[2].number", "any-string"),
+                                              jsonPartEquals("[2].error", "not a number"),
+                                              jsonPartEquals("[3].number", "4"),
+                                              jsonPartEquals("[3].decomposition", asList(2, 2))));
+    }
+
 }

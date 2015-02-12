@@ -10,6 +10,9 @@ import com.vtence.molecule.Request;
 import com.vtence.molecule.Response;
 import com.vtence.molecule.http.MimeTypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.alexandreamyot.yose.primes.Pythagoras.primesOf;
 import static com.vtence.molecule.http.HttpStatus.OK;
 import static java.lang.Integer.parseInt;
@@ -18,27 +21,37 @@ public class Primes implements Application {
 
     @Override
     public void handle(Request request, Response response) throws Exception {
-        response.body(toJson(process(request)));
+        response.body(toJson(decompose(request)));
         response.contentType(MimeTypes.JSON);
         response.status(OK);
     }
 
-    private PrimesResult process(Request request) {
-        String input = request.parameter("number");
-        if (NotANumber.check(input)) {
-            return new NotANumber(input);
-        } else if (NumberIsTooBig.check(input)) {
-            return new NumberIsTooBig(input);
-        } else {
-            return new Decomposition(input, primesOf(parseInt(input)));
+    private List<PrimesResult> decompose(Request request) {
+        List<PrimesResult> results = new ArrayList<>();
+
+        List<String> inputs = request.parameters("number");
+        for (String input : inputs) {
+            if (NotANumber.check(input)) {
+                results.add(new NotANumber(input));
+            } else if (NumberIsTooBig.check(input)) {
+                results.add(new NumberIsTooBig(input));
+            } else {
+                results.add(new Decomposition(input, primesOf(parseInt(input))));
+            }
         }
+
+        return results;
     }
 
-    private String toJson(Object result) {
+    private String toJson(List<PrimesResult> results) {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
-                .toJson(result);
+                .toJson(resultOf(results));
+    }
+
+    private Object resultOf(List<PrimesResult> results) {
+        return results.size() > 1 ? results : results.get(0);
     }
 
 }
