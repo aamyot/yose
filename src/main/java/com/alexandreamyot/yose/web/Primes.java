@@ -1,10 +1,10 @@
 package com.alexandreamyot.yose.web;
 
-import com.alexandreamyot.yose.primes.Decomposition;
 import com.alexandreamyot.yose.primes.NotANumber;
 import com.alexandreamyot.yose.primes.NumberIsTooBig;
 import com.alexandreamyot.yose.primes.PrimesResult;
-import com.google.gson.GsonBuilder;
+import com.alexandreamyot.yose.primes.ValidResult;
+import com.google.gson.Gson;
 import com.vtence.molecule.Application;
 import com.vtence.molecule.Request;
 import com.vtence.molecule.Response;
@@ -36,7 +36,7 @@ public class Primes implements Application {
             } else if (NumberIsTooBig.check(input)) {
                 results.add(new NumberIsTooBig(input));
             } else {
-                results.add(new Decomposition(input, primesOf(parseInt(input))));
+                results.add(new ValidResult(input, primesOf(parseInt(input))));
             }
         }
 
@@ -44,10 +44,7 @@ public class Primes implements Application {
     }
 
     private String toJson(List<PrimesResult> results) {
-        return new GsonBuilder()
-                .setPrettyPrinting()
-                .create()
-                .toJson(resultOf(results));
+        return new Gson().toJson(resultOf(results));
     }
 
     private Object resultOf(List<PrimesResult> results) {

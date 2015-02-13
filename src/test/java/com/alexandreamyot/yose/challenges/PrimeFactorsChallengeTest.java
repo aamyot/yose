@@ -8,16 +8,18 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static com.alexandreamyot.yose.support.PrimesResultMatchers.notANumber;
+import static com.alexandreamyot.yose.support.PrimesResultMatchers.tooBigNumber;
+import static com.alexandreamyot.yose.support.PrimesResultMatchers.validResponse;
 import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.path.json.JsonPath.from;
 import static java.util.Arrays.asList;
-import static net.javacrumbs.jsonunit.JsonMatchers.jsonPartEquals;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class PrimeFactorsChallengeTest {
 
-    private Yose server ;
+    private Yose server;
 
     @Before
     public void startServer() throws IOException {
@@ -36,8 +38,7 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), allOf(jsonPartEquals("number", "16"),
-                                              jsonPartEquals("decomposition", asList(2, 2, 2, 2))));
+        assertThat(response.asString(), validResponse("16", asList(2, 2, 2, 2)));
     }
 
     @Test
@@ -46,8 +47,7 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), allOf(jsonPartEquals("number", "any-string"),
-                                              jsonPartEquals("error", "not a number")));
+        assertThat(response.asString(), notANumber("any-string"));
     }
 
     @Test
@@ -56,8 +56,7 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), allOf(jsonPartEquals("number", "1000001"),
-                                              jsonPartEquals("error", "too big number (>1e6)")));
+        assertThat(response.asString(), tooBigNumber("1000001"));
     }
 
     @Test
@@ -66,14 +65,14 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), allOf(jsonPartEquals("[0].number", "16"),
-                                              jsonPartEquals("[0].decomposition", asList(2, 2, 2, 2)),
-                                              jsonPartEquals("[1].number", "1000001"),
-                                              jsonPartEquals("[1].error", "too big number (>1e6)"),
-                                              jsonPartEquals("[2].number", "any-string"),
-                                              jsonPartEquals("[2].error", "not a number"),
-                                              jsonPartEquals("[3].number", "4"),
-                                              jsonPartEquals("[3].decomposition", asList(2, 2))));
+        assertThat(json(response, "[0]"), validResponse("16", asList(2, 2, 2, 2)));
+        assertThat(json(response, "[1]"), tooBigNumber("1000001"));
+        assertThat(json(response, "[2]"), notANumber("any-string"));
+        assertThat(json(response, "[3]"), validResponse("4", asList(2, 2)));
+    }
+
+    private <T> T json(Response response, String path) {
+        return from(response.asString()).get(path);
     }
 
 }
