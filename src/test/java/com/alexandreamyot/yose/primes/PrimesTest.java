@@ -22,7 +22,7 @@ public class PrimesTest {
 
     @Test
     public void uiShouldIncludeAHtmlForm() {
-        String html = view("src/main/webapp/views/primes.html");
+        String html = view("primes");
         assertThat(loadDocumentElement(html), hasUniqueSelector("form", hasUniqueSelector("#title"),
                                                                         hasUniqueSelector("#invitation"),
                                                                         hasUniqueSelector("input#number[type='text']"),
@@ -41,7 +41,7 @@ public class PrimesTest {
     private String view(String name) {
         try {
             ;
-            return new String(readAllBytes(get(Paths.get(name).toUri())));
+            return new String(readAllBytes(get(Paths.get("src/main/webapp/views/" + name + ".html").toUri())));
         } catch (Exception e) {
             throw new InternalError(e);
         }
