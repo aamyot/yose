@@ -39,10 +39,13 @@ public class Yose {
     }
 
     private DynamicRoutes routes() {
+        Primes primes = new Primes(templates.named("primes"));
+
         return new DynamicRoutes() {{
             get("/").to(new Home(templates.named("home")));
             get("/ping").to(new Ping());
-            get("/primeFactors").to(new Primes());
+            get("/primeFactors").to(primes::list);
+            get("/primeFactors/ui").to(primes::ui);
         }};
     }
 

@@ -14,7 +14,9 @@ import static com.alexandreamyot.yose.support.PrimesResultMatchers.tooBigNumber;
 import static com.alexandreamyot.yose.support.PrimesResultMatchers.validResponse;
 import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.AllOf.allOf;
 
 public class PrimeFactorsChallengeTest {
 
@@ -72,6 +74,19 @@ public class PrimeFactorsChallengeTest {
                     "{\"number\":\"any-string\",\"error\":\"not a number\"}," +
                     "{\"number\":4,\"decomposition\":[2,2]}" +
                 "]"));
+    }
+
+    @Test
+    public void pageIncludesAnHtmlFormForDecomposingANumber() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001/primeFactors/ui");
+
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("text/html");
+        assertThat(response).hasBodyText(allOf(
+                                            containsString("id=\"title\""),
+                                            containsString("id=\"invitation\""),
+                                            containsString("<input type=\"text\" id=\"number\""),
+                                            containsString("<input type=\"button\" id=\"go\"")));
     }
 
 }

@@ -20,8 +20,8 @@ public class Home implements Application {
 
     @Override
     public void handle(Request request, Response response) throws Exception {
-        response.contentType(MimeTypes.HTML);
         response.status(OK);
+        response.contentType(MimeTypes.HTML);
         response.body(view.render(EMPTY_CONTEXT));
     }
 }
