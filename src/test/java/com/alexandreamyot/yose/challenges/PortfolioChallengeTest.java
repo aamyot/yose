@@ -1,20 +1,21 @@
 package com.alexandreamyot.yose.challenges;
 
 import com.alexandreamyot.yose.Yose;
-import com.jayway.restassured.response.Response;
+import com.vtence.molecule.testing.HttpRequest;
+import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.jayway.restassured.RestAssured.given;
+import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
 
 public class PortfolioChallengeTest {
 
-    private Yose server ;
+    HttpRequest request = new HttpRequest(7001);
+    Yose server ;
 
     @Before
     public void startServer() throws IOException {
@@ -28,16 +29,16 @@ public class PortfolioChallengeTest {
     }
 
     @Test
-    public void homeIncludesALinkToMyContact() {
-        Response response = given().get("http://localhost:7001");
+    public void homeIncludesALinkToMyContact() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001");
 
-        assertThat(response.asString(), containsString("<a id=\"contact-me-link\" href=\"http://ca.linkedin.com/in/alexandreamyot\">Contact</a>"));
+        assertThat(response).hasBodyText(containsString("<a id=\"contact-me-link\" href=\"http://ca.linkedin.com/in/alexandreamyot\">Contact</a>"));
     }
 
     @Test
-    public void homeIncludesALinkToThePinkChallenge() {
-        Response response = given().get("http://localhost:7001");
+    public void homeIncludesALinkToThePinkChallenge() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001");
 
-        assertThat(response.asString(), containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping</a>"));
+        assertThat(response).hasBodyText(containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping</a>"));
     }
 }

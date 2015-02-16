@@ -6,7 +6,7 @@ import com.vtence.molecule.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.vtence.molecule.support.ResponseAssertions.assertThat;
+import static com.vtence.molecule.testing.ResponseAssert.assertThat;
 import static java.util.Arrays.asList;
 import static net.javacrumbs.jsonunit.JsonMatchers.jsonPartEquals;
 import static org.hamcrest.Matchers.allOf;

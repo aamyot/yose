@@ -23,8 +23,8 @@ repositories {
 }
 
 def libs = [
-        molecule        : 'com.vtence.molecule:molecule:0.5.1',
-        molecule_test   : 'com.vtence.molecule:molecule:0.5.1:tests',
+        molecule        : 'com.vtence.molecule:molecule:0.6.1',
+        molecule_test   : 'com.vtence.molecule:molecule:0.6.1:tests',
         simple          : 'org.simpleframework:simple:5.1.6',
         jmustache       : 'com.samskivert:jmustache:1.9',
         hamcrest_all    : 'org.hamcrest:hamcrest-all:1.3',
@@ -32,7 +32,6 @@ def libs = [
         junit           : 'junit:junit:4.11@jar',
         json_unit       : 'net.javacrumbs.json-unit:json-unit:1.5.1',
         gson            : 'com.google.code.gson:gson:2.3.1',
-        rest_assured    : 'com.jayway.restassured:rest-assured:2.4.0',
         no_log          : 'org.slf4j:slf4j-nop:1.7.10'
 ]
 
@@ -47,7 +46,6 @@ dependencies {
     testCompile libs.junit
     testCompile libs.json_unit
     testCompile libs.mockito
-    testCompile libs.rest_assured
 }
 
 mainClassName = "com.alexandreamyot.yose.Yose"

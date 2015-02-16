@@ -1,21 +1,21 @@
 package com.alexandreamyot.yose.challenges;
 
 import com.alexandreamyot.yose.Yose;
-import com.jayway.restassured.response.Response;
+import com.vtence.molecule.testing.HttpRequest;
+import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.jayway.restassured.RestAssured.given;
+import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 public class StartChallengeTest {
 
-    private Yose server ;
+    HttpRequest request = new HttpRequest(7001);
+    Yose server ;
 
     @Before
     public void startServer() throws IOException {
@@ -29,28 +29,28 @@ public class StartChallengeTest {
     }
 
     @Test
-    public void homeContainsTheStringHelloYose() {
-        Response response = given().get("http://localhost:7001");
+    public void homeContainsTheStringHelloYose() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001");
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.contentType(), equalTo("text/html"));
-        assertThat(response.asString(), containsString("Hello Yose"));
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("text/html");
+        assertThat(response).hasBodyText(containsString("Hello Yose"));
     }
 
     @Test
-    public void homeIncludesALinkToAGitHubRepository() {
-        Response response = given().get("http://localhost:7001");
+    public void homeIncludesALinkToAGitHubRepository() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001");
 
-        assertThat(response.asString(), containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">GitHub</a>"));
+        assertThat(response).hasBodyText(containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">GitHub</a>"));
     }
 
     @Test
-    public void respondsAliveToAPing() {
-        Response response = given().get("http://localhost:7001/ping");
+    public void respondsAliveToAPing() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001/ping");
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), equalTo("{ \"alive\" : true }"));
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("application/json");
+        assertThat(response).hasBodyText("{ \"alive\" : true }");
     }
 
 

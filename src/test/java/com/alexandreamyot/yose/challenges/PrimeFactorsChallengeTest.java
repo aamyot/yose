@@ -1,7 +1,8 @@
 package com.alexandreamyot.yose.challenges;
 
 import com.alexandreamyot.yose.Yose;
-import com.jayway.restassured.response.Response;
+import com.vtence.molecule.testing.HttpRequest;
+import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,15 +12,14 @@ import java.io.IOException;
 import static com.alexandreamyot.yose.support.PrimesResultMatchers.notANumber;
 import static com.alexandreamyot.yose.support.PrimesResultMatchers.tooBigNumber;
 import static com.alexandreamyot.yose.support.PrimesResultMatchers.validResponse;
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.path.json.JsonPath.from;
+import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 public class PrimeFactorsChallengeTest {
 
-    private Yose server;
+    HttpRequest request = new HttpRequest(7001);
+    Yose server;
 
     @Before
     public void startServer() throws IOException {
@@ -33,46 +33,45 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    public void decomposesANumberIntoPrimeFactors() {
-        Response response = given().get("http://localhost:7001/primeFactors?number=16");
+    public void decomposesANumberIntoPrimeFactors() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=16");
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), validResponse("16", asList(2, 2, 2, 2)));
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("application/json");
+        assertThat(response).hasBodyText(validResponse("16", asList(2, 2, 2, 2)));
     }
 
     @Test
-    public void returnsANotANumberMessageForAString() {
-        Response response = given().get("http://localhost:7001/primeFactors?number=any-string");
+    public void returnsANotANumberMessageForAString() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=any-string");
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), notANumber("any-string"));
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("application/json");
+        assertThat(response).hasBodyText(notANumber("any-string"));
     }
 
     @Test
-    public void returnsNumberIsTooBigMessageForANumberGreatherThan1e6() {
-        Response response = given().get("http://localhost:7001/primeFactors?number=1000001");
+    public void returnsNumberIsTooBigMessageForANumberGreatherThan1e6() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=1000001");
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asString(), tooBigNumber("1000001"));
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("application/json");
+        assertThat(response).hasBodyText(tooBigNumber("1000001"));
     }
 
     @Test
-    public void decomposesAListOfNumbers() {
-        Response response = given().get("http://localhost:7001/primeFactors?number=16&number=1000001&number=any-string&number=4");
+    public void decomposesAListOfNumbers() throws IOException {
+        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=300&number=1000001&number=any-string&number=4");
 
-        assertThat(response.statusCode(), equalTo(200));
-        assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(json(response, "[0]"), validResponse("16", asList(2, 2, 2, 2)));
-        assertThat(json(response, "[1]"), tooBigNumber("1000001"));
-        assertThat(json(response, "[2]"), notANumber("any-string"));
-        assertThat(json(response, "[3]"), validResponse("4", asList(2, 2)));
-    }
-
-    private <T> T json(Response response, String path) {
-        return from(response.asString()).get(path);
+        assertThat(response).hasStatusCode(200);
+        assertThat(response).hasContentType("application/json");
+        assertThat(response).hasBodyText(equalTo(
+                "[" +
+                    "{\"number\":300,\"decomposition\":[2,2,3,5,5]}," +
+                    "{\"number\":1000001,\"error\":\"too big number (\\u003e1e6)\"}," +
+                    "{\"number\":\"any-string\",\"error\":\"not a number\"}," +
+                    "{\"number\":4,\"decomposition\":[2,2]}" +
+                "]"));
     }
 
 }
