@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.containsString;
 public class StartChallengeTest {
 
     HttpRequest request = new HttpRequest(7001);
-    Yose server ;
+    Yose server;
 
     @Before
     public void startServer() throws IOException {
@@ -30,27 +30,27 @@ public class StartChallengeTest {
 
     @Test
     public void homeContainsTheStringHelloYose() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001");
+        HttpResponse response = request.get("/");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("text/html");
-        assertThat(response).hasBodyText(containsString("Hello Yose"));
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("text/html")
+                            .hasBodyText(containsString("Hello Yose"));
     }
 
     @Test
     public void homeIncludesALinkToAGitHubRepository() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001");
+        HttpResponse response = request.get("/");
 
         assertThat(response).hasBodyText(containsString("<a id=\"repository-link\" href=\"https://github.com/aamyot/yose\">GitHub</a>"));
     }
 
     @Test
     public void respondsAliveToAPing() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001/ping");
+        HttpResponse response = request.get("/ping");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("application/json");
-        assertThat(response).hasBodyText("{ \"alive\" : true }");
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText("{ \"alive\" : true }");
     }
 
 

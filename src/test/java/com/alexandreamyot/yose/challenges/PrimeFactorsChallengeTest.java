@@ -36,57 +36,58 @@ public class PrimeFactorsChallengeTest {
 
     @Test
     public void decomposesANumberIntoPrimeFactors() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=16");
+        HttpResponse response = request.get("/primeFactors?number=16");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("application/json");
-        assertThat(response).hasBodyText(validResponse("16", asList(2, 2, 2, 2)));
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText(validResponse("16", asList(2, 2, 2, 2)));
     }
 
     @Test
     public void returnsANotANumberMessageForAString() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=any-string");
+        HttpResponse response = request.get("/primeFactors?number=any-string");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("application/json");
-        assertThat(response).hasBodyText(notANumber("any-string"));
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText(notANumber("any-string"));
     }
 
     @Test
     public void returnsNumberIsTooBigMessageForANumberGreatherThan1e6() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=1000001");
+        HttpResponse response = request.get("/primeFactors?number=1000001");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("application/json");
-        assertThat(response).hasBodyText(tooBigNumber("1000001"));
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText(tooBigNumber("1000001"));
     }
 
     @Test
     public void decomposesAListOfNumbers() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001/primeFactors?number=300&number=1000001&number=any-string&number=4");
+        HttpResponse response = request.get("/primeFactors?number=300&number=1000001&number=any-string&number=4");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("application/json");
-        assertThat(response).hasBodyText(equalTo(
-                "[" +
-                    "{\"number\":300,\"decomposition\":[2,2,3,5,5]}," +
-                    "{\"number\":1000001,\"error\":\"too big number (\\u003e1e6)\"}," +
-                    "{\"number\":\"any-string\",\"error\":\"not a number\"}," +
-                    "{\"number\":4,\"decomposition\":[2,2]}" +
-                "]"));
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText(equalTo(
+                                    "[" +
+                                        "{\"number\":300,\"decomposition\":[2,2,3,5,5]}," +
+                                        "{\"number\":1000001,\"error\":\"too big number (\\u003e1e6)\"}," +
+                                        "{\"number\":\"any-string\",\"error\":\"not a number\"}," +
+                                        "{\"number\":4,\"decomposition\":[2,2]}" +
+                                    "]"));
     }
 
     @Test
     public void pageIncludesAnHtmlFormForDecomposingANumber() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001/primeFactors/ui");
+        HttpResponse response = request.get("/primeFactors/ui");
 
-        assertThat(response).hasStatusCode(200);
-        assertThat(response).hasContentType("text/html");
-        assertThat(response).hasBodyText(allOf(
-                                            containsString("id=\"title\""),
-                                            containsString("id=\"invitation\""),
-                                            containsString("<input type=\"text\" id=\"number\""),
-                                            containsString("<input type=\"button\" id=\"go\"")));
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("text/html")
+                            .hasBodyText(allOf(
+                                    containsString("<form"),
+                                    containsString("id=\"title\""),
+                                    containsString("id=\"invitation\""),
+                                    containsString("<input type=\"text\" id=\"number\""),
+                                    containsString("<input type=\"button\" id=\"go\"")));
     }
 
 }

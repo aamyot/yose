@@ -30,14 +30,14 @@ public class PortfolioChallengeTest {
 
     @Test
     public void homeIncludesALinkToMyContact() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001");
+        HttpResponse response = request.get("/");
 
         assertThat(response).hasBodyText(containsString("<a id=\"contact-me-link\" href=\"http://ca.linkedin.com/in/alexandreamyot\">Contact</a>"));
     }
 
     @Test
     public void homeIncludesALinkToThePinkChallenge() throws IOException {
-        HttpResponse response = request.get("http://localhost:7001");
+        HttpResponse response = request.get("/");
 
         assertThat(response).hasBodyText(containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping</a>"));
     }
