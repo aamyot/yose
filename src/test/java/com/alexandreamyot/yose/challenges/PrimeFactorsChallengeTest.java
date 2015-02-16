@@ -83,11 +83,10 @@ public class PrimeFactorsChallengeTest {
         assertThat(response).hasStatusCode(200)
                             .hasContentType("text/html")
                             .hasBodyText(allOf(
-                                    containsString("<form"),
                                     containsString("id=\"title\""),
                                     containsString("id=\"invitation\""),
                                     containsString("<input type=\"text\" id=\"number\""),
-                                    containsString("<input type=\"button\" id=\"go\"")));
+                                    containsString("<button id=\"go\"")));
     }
 
 }
