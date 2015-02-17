@@ -9,11 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.alexandreamyot.yose.support.PrimesResultMatchers.notANumber;
-import static com.alexandreamyot.yose.support.PrimesResultMatchers.tooBigNumber;
-import static com.alexandreamyot.yose.support.PrimesResultMatchers.validResponse;
 import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
-import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.AllOf.allOf;
@@ -40,7 +36,7 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response).hasStatusCode(200)
                             .hasContentType("application/json")
-                            .hasBodyText(validResponse("16", asList(2, 2, 2, 2)));
+                            .hasBodyText("{\"number\":16,\"decomposition\":[2,2,2,2]}");
     }
 
     @Test
@@ -49,7 +45,7 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response).hasStatusCode(200)
                             .hasContentType("application/json")
-                            .hasBodyText(notANumber("any-string"));
+                            .hasBodyText("{\"number\":\"any-string\",\"error\":\"not a number\"}");
     }
 
     @Test
@@ -58,19 +54,18 @@ public class PrimeFactorsChallengeTest {
 
         assertThat(response).hasStatusCode(200)
                             .hasContentType("application/json")
-                            .hasBodyText(tooBigNumber("1000001"));
+                            .hasBodyText("{\"number\":1000001,\"error\":\"too big number (\\u003e1e6)\"}");
     }
 
     @Test
     public void decomposesAListOfNumbers() throws IOException {
-        HttpResponse response = request.get("/primeFactors?number=300&number=1000001&number=any-string&number=4");
+        HttpResponse response = request.get("/primeFactors?number=300&number=any-string&number=4");
 
         assertThat(response).hasStatusCode(200)
                             .hasContentType("application/json")
                             .hasBodyText(equalTo(
                                     "[" +
                                         "{\"number\":300,\"decomposition\":[2,2,3,5,5]}," +
-                                        "{\"number\":1000001,\"error\":\"too big number (\\u003e1e6)\"}," +
                                         "{\"number\":\"any-string\",\"error\":\"not a number\"}," +
                                         "{\"number\":4,\"decomposition\":[2,2]}" +
                                     "]"));

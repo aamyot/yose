@@ -31,14 +31,11 @@ def libs = [
         dom_matchers    : 'org.testinfected.hamcrest-matchers:dom-matchers:1.7',
         mockito         : 'org.mockito:mockito-all:1.10.19',
         junit           : 'junit:junit:4.11@jar',
-        json_unit       : 'net.javacrumbs.json-unit:json-unit:1.5.1',
-        gson            : 'com.google.code.gson:gson:2.3.1',
-        no_log          : 'org.slf4j:slf4j-nop:1.7.10'
+        gson            : 'com.google.code.gson:gson:2.3.1'
 ]
 
 dependencies {
     compile libs.molecule
-    compile libs.no_log
     compile libs.simple
     compile libs.jmustache
     compile libs.gson
@@ -46,7 +43,6 @@ dependencies {
     testCompile libs.hamcrest_all
     testCompile libs.dom_matchers
     testCompile libs.junit
-    testCompile libs.json_unit
     testCompile libs.mockito
 }
 
