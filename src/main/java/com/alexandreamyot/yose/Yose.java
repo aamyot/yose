@@ -24,7 +24,7 @@ public class Yose {
 
     public Yose(int port) {
         this.server = WebServer.create(port);
-        this.webroot = new File("src/main/webapp");
+        this.webroot = new File("webapp");
         this.templates = new Templates(new JMustacheRenderer().fromDir(new File(webroot, "views")).extension("html"));
     }
 

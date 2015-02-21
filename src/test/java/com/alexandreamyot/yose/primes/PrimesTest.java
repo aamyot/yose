@@ -19,16 +19,17 @@ import static org.testinfected.hamcrest.dom.DomMatchers.hasUniqueSelector;
 public class PrimesTest {
 
     @Test
-    public void uiShouldIncludeAHtmlForm() {
+    public void viewShouldIncludeAHtmlForm() {
         assertThat(view("primes"), hasUniqueSelector("form", hasUniqueSelector("#title"),
                                                              hasUniqueSelector("#invitation"),
                                                              hasUniqueSelector("input#number[type='text']"),
                                                              hasUniqueSelector("button#go")));
     }
 
+
     private Element view(String viewname) {
         try {
-            FileReader reader = new FileReader(get("src/main/webapp/views/" + viewname + ".html").toFile());
+            FileReader reader = new FileReader(get("webapp/views/" + viewname + ".html").toFile());
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             return documentBuilder.parse(new InputSource(reader)).getDocumentElement();
         } catch (ParserConfigurationException | SAXException | IOException e) {
