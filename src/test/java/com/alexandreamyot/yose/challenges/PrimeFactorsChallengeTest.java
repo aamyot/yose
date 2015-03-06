@@ -4,8 +4,13 @@ import com.alexandreamyot.yose.Yose;
 import com.vtence.molecule.testing.HttpRequest;
 import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 
@@ -82,6 +87,20 @@ public class PrimeFactorsChallengeTest {
                                     containsString("id=\"invitation\""),
                                     containsString("<input type=\"text\" id=\"number\""),
                                     containsString("<button id=\"go\"")));
+    }
+
+    @Test
+    public void displaysTheResultOfTheInput() {
+        WebDriver webDriver = new FirefoxDriver();
+        Runtime.getRuntime().addShutdownHook(new Thread(webDriver::quit));
+
+        webDriver.navigate().to("http://localhost:7001/primeFactors/ui");
+        WebElement input = webDriver.findElement(By.id("number"));
+        input.clear();
+        input.sendKeys("24");
+        input.submit();
+
+        Assert.assertThat(webDriver.findElement(By.id("number")).getText(), equalTo("24"));
     }
 
 }

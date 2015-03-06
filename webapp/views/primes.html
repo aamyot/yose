@@ -8,12 +8,15 @@
 
 <body>
 <div class="container">
-    <form>
+    <form method="POST">
         <h2 id="title">Prime Factors</h2>
 
         <div id="invitation">Please enter a number:</div>
         <input type="text" id="number"/>
-        <button id="go" value="Decompose" />
+        <button id="go">Decompose</button>
+        {{#result}}
+        <div id="result"></div>
+        {{/result}}
     </form>
 </div>
 

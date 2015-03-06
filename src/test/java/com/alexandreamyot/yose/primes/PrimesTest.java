@@ -23,7 +23,8 @@ public class PrimesTest {
         assertThat(view("primes"), hasUniqueSelector("form", hasUniqueSelector("#title"),
                                                              hasUniqueSelector("#invitation"),
                                                              hasUniqueSelector("input#number[type='text']"),
-                                                             hasUniqueSelector("button#go")));
+                                                             hasUniqueSelector("button#go"),
+                                                             hasUniqueSelector("#result")));
     }
 
 

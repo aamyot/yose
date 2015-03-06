@@ -3,6 +3,7 @@
 build/
 *.iml
 gradlew.bat
+node_modules
 
 
 
