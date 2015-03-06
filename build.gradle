@@ -77,7 +77,7 @@ run {
 }
 
 task jasmineSetup(type: Exec) {
-    commandLine 'npm', 'install', 'jasmine-node', '--save-dev'
+    commandLine 'npm', 'install', 'jasmine-node'
 }
 
 task jasmineRun(type: Exec, dependsOn: jasmineSetup) {
