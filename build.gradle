@@ -76,12 +76,15 @@ run {
     args port
 }
 
-
-task jsTest(type: Exec) {
-    commandLine "npm", "test"
+task jasmineSetup(type: Exec) {
+    commandLine 'npm', 'install', 'jasmine-node', '--save-dev'
 }
 
-test.dependsOn('jsTest')
+task jasmineRun(type: Exec, dependsOn: jasmineSetup) {
+    commandLine "jasmine-node", "webapp/js"
+}
+
+test.dependsOn('jasmineRun')
 
 task stage(dependsOn: ['clean', 'installApp'])
 
