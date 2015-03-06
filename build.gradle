@@ -76,6 +76,13 @@ run {
     args port
 }
 
+
+task jsTest(type: Exec) {
+    commandLine "npm", "test"
+}
+
+test.dependsOn('jsTest')
+
 task stage(dependsOn: ['clean', 'installApp'])
 
 task coverage(dependsOn: ['clean', 'test', 'jacocoTestReport'])
