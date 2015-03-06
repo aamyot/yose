@@ -6,6 +6,7 @@ import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -90,6 +91,7 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
+    @Ignore
     public void displaysTheResultOfTheInput() {
         WebDriver webDriver = new FirefoxDriver();
         Runtime.getRuntime().addShutdownHook(new Thread(webDriver::quit));
