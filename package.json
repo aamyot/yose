@@ -1,0 +1,21 @@
+{
+  "name": "yose",
+  "version": "0.0.0",
+  "description": "",
+  "main": "s",
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine-node webapp/js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aamyot/yose.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/aamyot/yose/issues"
+  },
+  "devDependencies": {
+    "jasmine-node": "~1.14.5"
+  }
+}
