@@ -81,7 +81,7 @@ task jasmineSetup(type: Exec) {
 }
 
 task jasmineRun(type: Exec, dependsOn: jasmineSetup) {
-    commandLine "jasmine-node", "webapp/js"
+    commandLine "jasmine-node", "src/test/js"
 }
 
 test.dependsOn('jasmineRun')
