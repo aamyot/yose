@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.vtence.molecule.http.HttpMethod.GET;
-import static com.vtence.molecule.http.HttpMethod.POST;
 import static java.lang.Integer.parseInt;
 
 public class Yose {
@@ -47,12 +46,12 @@ public class Yose {
             get("/").to(new Home(templates.named("home")));
             get("/ping").to(new Ping());
             get("/primeFactors").to(primes::list);
-            map("/primeFactors/ui").via(GET, POST).to(primes::ui);
+            map("/primeFactors/ui").via(GET).to(primes::ui);
         }};
     }
 
     private StaticAssets staticAssets() {
-        return new StaticAssets(new FileServer(webroot)).serve("/css");
+        return new StaticAssets(new FileServer(webroot)).serve("/css", "/js");
     }
 
     public static void main(String[] args) throws IOException {
