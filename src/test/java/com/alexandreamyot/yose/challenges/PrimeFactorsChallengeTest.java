@@ -6,7 +6,6 @@ import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -91,18 +90,18 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    @Ignore
     public void displaysTheResultOfTheInput() {
         WebDriver webDriver = new FirefoxDriver();
         Runtime.getRuntime().addShutdownHook(new Thread(webDriver::quit));
 
         webDriver.navigate().to("http://localhost:7001/primeFactors/ui");
         WebElement input = webDriver.findElement(By.id("number"));
-        input.clear();
         input.sendKeys("24");
-        input.submit();
+        WebElement go = webDriver.findElement(By.id("go"));
+        go.click();
 
-        Assert.assertThat(webDriver.findElement(By.id("number")).getText(), equalTo("24"));
+
+        Assert.assertThat(webDriver.findElement(By.id("result")).getText(), equalTo("24 = 2 x 2 x 2 x 3"));
     }
 
 }

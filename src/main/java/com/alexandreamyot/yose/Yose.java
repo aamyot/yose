@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.vtence.molecule.http.HttpMethod.GET;
+import static com.vtence.molecule.http.HttpMethod.POST;
 import static java.lang.Integer.parseInt;
 
 public class Yose {
@@ -45,8 +46,8 @@ public class Yose {
         return new DynamicRoutes() {{
             get("/").to(new Home(templates.named("home")));
             get("/ping").to(new Ping());
-            get("/primeFactors").to(primes::list);
-            map("/primeFactors/ui").via(GET).to(primes::ui);
+            map("/primeFactors").via(GET, POST).to(primes::list);
+            get("/primeFactors/ui").to(primes::ui);
         }};
     }
 

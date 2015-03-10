@@ -22,12 +22,20 @@ describe("Prime", function () {
         primes.ajax = ajax;
     });
 
-    it('opens a GET request', function() {
+    it('opens a POST request', function() {
         spyOn(ajax, 'open');
 
         primes.send();
 
-        expect(ajax.open).toHaveBeenCalledWith('GET', '/primeFactors', true);
+        expect(ajax.open).toHaveBeenCalledWith('POST', '/primeFactors', true);
+    });
+
+    it('sets correct content-type', function () {
+        spyOn(ajax, 'setRequestHeader');
+
+        primes.send();
+
+        expect(ajax.setRequestHeader).toHaveBeenCalledWith('Content-type', 'application/x-www-form-urlencoded');
     });
 
     it('sends the value of the input form', function () {

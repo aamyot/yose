@@ -14,7 +14,8 @@ Primes.prototype = {
             }
         };
 
-        this.ajax.open('GET', '/primeFactors', true);
+        this.ajax.open('POST', '/primeFactors', true);
+        this.ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         this.ajax.send('number=' + this.container.querySelector('input#number').value);
     },
 
