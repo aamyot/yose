@@ -13,7 +13,6 @@ describe("Prime", function () {
     var document = require('jsdom').jsdom('' +
         '<form id="primes">' +
         '   <input type="text" id="number" value="24"/>' +
-        '   <div id="result"></div>' +
         '</form>'
     );
 
@@ -59,7 +58,7 @@ describe("Prime", function () {
 
         primes.send();
 
-        expect(document.querySelector("#result").innerHTML).toEqual("24 = 2 x 3 x 4");
+        expect(document.getElementById("result").innerHTML).toEqual("24 = 2 x 3 x 4");
     });
 
 });

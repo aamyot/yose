@@ -13,18 +13,18 @@ public class User {
 
     private PrimesPage page;
 
-    public User openThePrimesUI() {
+    public User opensThePrimesUI() {
         page = new PrimesPage();
         page.go();
         return this;
     }
 
-    public User enterANumber(String number) {
+    public User entersANumber(String number) {
         page.number(number);
         return this;
     }
 
-    public User submitToDecompose() {
+    public User submitsToDecompose() {
         page.submit();
         return this;
     }

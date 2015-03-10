@@ -90,9 +90,9 @@ public class PrimeFactorsChallengeTest {
     public void displaysTheResultOfTheInput() {
         User user = new User();
 
-        user.openThePrimesUI()
-            .enterANumber("24")
-            .submitToDecompose()
+        user.opensThePrimesUI()
+            .entersANumber("24")
+            .submitsToDecompose()
             .andSeesThePrimesOfTheNumber(asList(2, 2, 2, 3));
     }
 

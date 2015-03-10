@@ -10,7 +10,11 @@ Primes.prototype = {
         this.ajax.onreadystatechange = function() {
             if(self.ajax.readyState === 4) {
                 var response = JSON.parse(self.ajax.responseText);
-                self.container.querySelector('#result').innerHTML = self.render(response.number, response.decomposition);
+                var result = self.container.createElement("div");
+                result.setAttribute("id", "result");
+                result.innerHTML = self.render(response.number, response.decomposition);
+
+                self.container.querySelector("form").appendChild(result);
             }
         };
 

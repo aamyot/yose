@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import static java.nio.file.Paths.get;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.testinfected.hamcrest.dom.DomMatchers.hasUniqueSelector;
 
@@ -24,7 +25,7 @@ public class PrimesTest {
                                                              hasUniqueSelector("#invitation"),
                                                              hasUniqueSelector("input#number[type='text']"),
                                                              hasUniqueSelector("button#go"),
-                                                             hasUniqueSelector("#result")));
+                                                             not(hasUniqueSelector("#result"))));
     }
 
 
