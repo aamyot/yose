@@ -1,20 +1,17 @@
 package com.alexandreamyot.yose.challenges;
 
 import com.alexandreamyot.yose.Yose;
+import com.alexandreamyot.yose.support.actors.User;
 import com.vtence.molecule.testing.HttpRequest;
 import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 
 import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.AllOf.allOf;
@@ -91,17 +88,12 @@ public class PrimeFactorsChallengeTest {
 
     @Test
     public void displaysTheResultOfTheInput() {
-        WebDriver webDriver = new FirefoxDriver();
-        Runtime.getRuntime().addShutdownHook(new Thread(webDriver::quit));
+        User user = new User();
 
-        webDriver.navigate().to("http://localhost:7001/primeFactors/ui");
-        WebElement input = webDriver.findElement(By.id("number"));
-        input.sendKeys("24");
-        WebElement go = webDriver.findElement(By.id("go"));
-        go.click();
-
-
-        Assert.assertThat(webDriver.findElement(By.id("result")).getText(), equalTo("24 = 2 x 2 x 2 x 3"));
+        user.openThePrimesUI()
+            .enterANumber("24")
+            .submitToDecompose()
+            .andSeesThePrimesOfTheNumber(asList(2, 2, 2, 3));
     }
 
 }

@@ -18,8 +18,7 @@ describe("Prime", function () {
     );
 
     beforeEach(function () {
-        primes = new Primes(document);
-        primes.ajax = ajax;
+        primes = new Primes(document, ajax);
     });
 
     it('opens a POST request', function() {
