@@ -80,7 +80,7 @@ task jasmineSetup(type: Exec) {
     commandLine 'npm', 'install'
 }
 
-task jasmineRun(type: Exec, dependsOn: jasmineSetup) {
+task jasmineRun(type: Exec) {
     commandLine "jasmine-node", "src/test/js"
 }
 
