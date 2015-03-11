@@ -97,7 +97,7 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    public void displaysNumberIsTooBigForANumberGreatherThan1e6() {
+    public void displaysErrorMessageForInvalidInput() {
         User user = new User();
 
         user.opensThePrimesUI()

@@ -25,14 +25,18 @@ primes = {
     },
 
     renderResponse: function(response) {
-        return response.error ? this.errorResponse(response.error) : this.successfulResponse(response.number, response.decomposition);
+        if (response.decomposition) {
+            return this.renderPrimes(response.number, response.decomposition);
+        } else if (response.error === 'not a number') {
+            return response.number + ' is not a number';
+        } else if (response.error) {
+            return response.error;
+        }
+
+        return '';
     },
 
-    errorResponse: function(error) {
-        return error;
-    },
-
-    successfulResponse: function(number, primes) {
+    renderPrimes: function(number, primes) {
         return number + " = " + primes.join(" x ");
     }
 };

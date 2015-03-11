@@ -49,7 +49,7 @@ describe("Primes UI", function () {
     describe('Rendering', function() {
 
         it('knows how to decompose the response', function() {
-            expect(primes.successfulResponse(20, [2,2,5])).toEqual("20 = 2 x 2 x 5");
+            expect(primes.renderPrimes(20, [2,2,5])).toEqual("20 = 2 x 2 x 5");
         });
 
         it('displays the decomposed number', function() {
@@ -72,6 +72,17 @@ describe("Primes UI", function () {
             primes.send();
 
             expect(document.querySelector("#result").innerHTML).toEqual("the error message");
+        });
+
+        it('displays specific message for NotANumber error', function(){
+            ajax.send = function() {
+                ajax.responseText = JSON.stringify({number:'NaN', error:'not a number'});
+                ajax.onload();
+            };
+
+            primes.send();
+
+            expect(document.querySelector("#result").innerHTML).toEqual("NaN is not a number");
         });
     });
 
