@@ -1,11 +1,18 @@
-Primes = function(container, ajax) {
-    this.container = container;
-    this.ajax = ajax;
-};
 
-Primes.prototype = {
+primes = {
+    init: function(container, ajax) {
+        this.container = container;
+        this.ajax = ajax;
 
-    send: function(number) {
+        container.addEventListener('DOMContentLoaded', function() {
+            container.querySelector('form#primes').addEventListener('submit', function(event) {
+                event.preventDefault();
+                primes.send();
+            });
+        });
+    },
+
+    send: function() {
         var self = this;
         this.ajax.onload = function() {
             var response = JSON.parse(self.ajax.responseText);
@@ -20,7 +27,6 @@ Primes.prototype = {
     render: function(number, primes) {
         return number + " = " + primes.join(" x ");
     }
-
-};
+}
 
 

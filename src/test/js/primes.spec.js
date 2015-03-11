@@ -2,8 +2,6 @@ require('../../../webapp/js/primes');
 
 describe("Prime", function () {
 
-    var primes;
-
     var ajax = {
         send: function () {},
         setRequestHeader: function() {},
@@ -18,7 +16,7 @@ describe("Prime", function () {
     );
 
     beforeEach(function () {
-        primes = new Primes(document, ajax);
+        primes.init(document, ajax);
     });
 
     it('opens a POST request', function() {
