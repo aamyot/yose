@@ -87,13 +87,23 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    public void displaysTheResultOfTheInput() {
+    public void displaysThePrimesNumber() {
         User user = new User();
 
         user.opensThePrimesUI()
             .entersANumber("24")
             .submitsToDecompose()
             .andSeesThePrimesOfTheNumber(asList(2, 2, 2, 3));
+    }
+
+    @Test
+    public void displaysNumberIsTooBigForANumberGreatherThan1e6() {
+        User user = new User();
+
+        user.opensThePrimesUI()
+            .entersANumber("1234567")
+            .submitsToDecompose()
+            .andSeesTheErrorMessage("too big number (>1e6)");
     }
 
 }

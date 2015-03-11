@@ -29,12 +29,15 @@ public class User {
         return this;
     }
 
-    public User andSeesThePrimesOfTheNumber(List<Integer> primes) {
+    public void andSeesThePrimesOfTheNumber(List<Integer> primes) {
         assertThat(page.result(), equalTo(expectedResult(page.number(), primes)));
-        return this;
     }
 
     private String expectedResult(String number, List<Integer> primes) {
         return number + " = " + primes.stream().map(String::valueOf).collect(joining(" x "));
+    }
+
+    public void andSeesTheErrorMessage(String error) {
+        assertThat(page.result(), equalTo(error));
     }
 }

@@ -1,6 +1,6 @@
 require('../../../webapp/js/primes');
 
-describe("Prime", function () {
+describe("Primes UI", function () {
 
     var ajax = {
         send: function () {},
@@ -19,44 +19,60 @@ describe("Prime", function () {
         primes.init(document, ajax);
     });
 
-    it('opens a POST request', function() {
-        spyOn(ajax, 'open');
+    describe('Form', function() {
 
-        primes.send();
+        it('opens a POST request', function() {
+            spyOn(ajax, 'open');
 
-        expect(ajax.open).toHaveBeenCalledWith('POST', '/primeFactors', true);
+            primes.send();
+
+            expect(ajax.open).toHaveBeenCalledWith('POST', '/primeFactors', true);
+        });
+
+        it('sets correct content-type', function () {
+            spyOn(ajax, 'setRequestHeader');
+
+            primes.send();
+
+            expect(ajax.setRequestHeader).toHaveBeenCalledWith('Content-type', 'application/x-www-form-urlencoded');
+        });
+
+        it('sends the value of the input form', function () {
+            spyOn(ajax, 'send');
+
+            primes.send();
+
+            expect(ajax.send).toHaveBeenCalledWith("number=24");
+        });
     });
 
-    it('sets correct content-type', function () {
-        spyOn(ajax, 'setRequestHeader');
+    describe('Rendering', function() {
 
-        primes.send();
+        it('knows how to decompose the response', function() {
+            expect(primes.successfulResponse(20, [2,2,5])).toEqual("20 = 2 x 2 x 5");
+        });
 
-        expect(ajax.setRequestHeader).toHaveBeenCalledWith('Content-type', 'application/x-www-form-urlencoded');
-    });
+        it('displays the decomposed number', function() {
+            ajax.send = function() {
+                ajax.responseText = JSON.stringify({number:24, decomposition:[2,3,4]});
+                ajax.onload();
+            };
 
-    it('sends the value of the input form', function () {
-        spyOn(ajax, 'send');
+            primes.send();
 
-        primes.send();
+            expect(document.querySelector("#result").innerHTML).toEqual("24 = 2 x 3 x 4");
+        });
 
-        expect(ajax.send).toHaveBeenCalledWith("number=24");
-    });
+        it('displays error message when an error occured', function(){
+            ajax.send = function() {
+                ajax.responseText = JSON.stringify({number:24, error:'the error message'});
+                ajax.onload();
+            };
 
-    it('knows how to decompose the response', function() {
+            primes.send();
 
-        expect(primes.render(20, [2,2,5])).toEqual("20 = 2 x 2 x 5");
-    });
-
-    it('displays the decomposed number', function() {
-        ajax.send = function() {
-            ajax.responseText = JSON.stringify({number:24, decomposition:[2,3,4]});
-            ajax.onload();
-        };
-
-        primes.send();
-
-        expect(document.getElementById("result").innerHTML).toEqual("24 = 2 x 3 x 4");
+            expect(document.querySelector("#result").innerHTML).toEqual("the error message");
+        });
     });
 
 });
