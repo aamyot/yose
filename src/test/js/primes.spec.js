@@ -8,12 +8,12 @@ describe("Prime", function () {
         open: function() {}
     };
 
-    var document = require('jsdom').jsdom('' +
+    var document = require('domino').createWindow('' +
         '<form id="primes">' +
         '   <input type="text" id="number" value="24"/>' +
         '   <div id="result"></div>' +
         '</form>'
-    );
+    ).document;
 
     beforeEach(function () {
         primes.init(document, ajax);
