@@ -13,6 +13,7 @@ describe("Prime", function () {
     var document = require('jsdom').jsdom('' +
         '<form id="primes">' +
         '   <input type="text" id="number" value="24"/>' +
+        '   <div id="result"></div>' +
         '</form>'
     );
 
@@ -51,9 +52,8 @@ describe("Prime", function () {
 
     it('displays the decomposed number', function() {
         ajax.send = function() {
-            ajax.readyState = 4;
             ajax.responseText = JSON.stringify({number:24, decomposition:[2,3,4]});
-            ajax.onreadystatechange();
+            ajax.onload();
         };
 
         primes.send();
