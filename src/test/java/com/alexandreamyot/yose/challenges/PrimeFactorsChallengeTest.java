@@ -1,7 +1,7 @@
 package com.alexandreamyot.yose.challenges;
 
 import com.alexandreamyot.yose.Yose;
-import com.alexandreamyot.yose.support.actors.User;
+import com.alexandreamyot.yose.support.pages.PrimesPage;
 import com.vtence.molecule.testing.HttpRequest;
 import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static com.vtence.molecule.testing.HttpResponseAssert.assertThat;
-import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.AllOf.allOf;
@@ -69,6 +68,15 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
+    public void returnsANotGreaterThanOneMessageWhenNumberIsOne() throws IOException {
+        HttpResponse response = request.get("/primeFactors?number=1");
+
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText("{\"number\":1,\"error\":\"1 is not an integer \\u003e 1\"}");
+    }
+
+    @Test
     public void decomposesAListOfNumbers() throws IOException {
         HttpResponse response = request.get("/primeFactors?number=300&number=any-string&number=4");
 
@@ -97,22 +105,32 @@ public class PrimeFactorsChallengeTest {
 
     @Test
     public void displaysThePrimesNumber() {
-        User user = new User();
-
-        user.opensThePrimesUI()
-            .entersANumber("24")
-            .submitsToDecompose()
-            .andSeesThePrimesOfTheNumber(asList(2, 2, 2, 3));
+        PrimesPage page = new PrimesPage();
+        page.go();
+        page.number("24");
+        page.submit();
+        page.hasResult("24 = 2 x 2 x 2 x 3");
     }
 
     @Test
     public void displaysErrorMessageForInvalidInput() {
-        User user = new User();
+        PrimesPage page = new PrimesPage();
+        page.go();
+        page.number("12345678");
+        page.submit();
+        page.hasResult("too big number (>1e6)");
+    }
 
-        user.opensThePrimesUI()
-            .entersANumber("1234567")
-            .submitsToDecompose()
-            .andSeesTheErrorMessage("too big number (>1e6)");
+    @Test
+    public void displaysTheDecompositionOfAListOfNumbers() throws IOException {
+        PrimesPage page = new PrimesPage();
+        page.go();
+        page.number("12, -24, not-a-number, 12345678");
+        page.submit();
+        page.hasResults("12 = 2 x 2 x 3",
+                        "-24 is not an integer > 1",
+                        "not-a-number is not a number",
+                        "too big number (>1e6)");
     }
 
 }

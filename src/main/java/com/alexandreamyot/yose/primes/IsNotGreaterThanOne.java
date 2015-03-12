@@ -13,6 +13,6 @@ public class IsNotGreaterThanOne implements PrimesResult {
     }
 
     public static boolean check(String input) {
-        return parseInt(input) < 1;
+        return parseInt(input) <= 1;
     }
 }

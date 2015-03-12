@@ -95,6 +95,17 @@ describe("Primes UI", function () {
 
             expect(document.querySelector("#result").innerHTML).toEqual("-24 is not an integer &gt; 1");
         });
+
+        it('displays result for multiple numbers', function(){
+            ajax.send = function() {
+                ajax.responseText = JSON.stringify({number:-24, error:'-24 is not an integer > 1'});
+                ajax.onload();
+            };
+
+            primes.send();
+
+            expect(document.querySelector("#result").innerHTML).toEqual("-24 is not an integer &gt; 1");
+        });
     });
 
 });
