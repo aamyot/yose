@@ -60,6 +60,15 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
+    public void returnsANotGreaterThanOneMessageForANumberLessThan1() throws IOException {
+        HttpResponse response = request.get("/primeFactors?number=-42");
+
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText("{\"number\":-42,\"error\":\"-42 is not an integer \\u003e 1\"}");
+    }
+
+    @Test
     public void decomposesAListOfNumbers() throws IOException {
         HttpResponse response = request.get("/primeFactors?number=300&number=any-string&number=4");
 

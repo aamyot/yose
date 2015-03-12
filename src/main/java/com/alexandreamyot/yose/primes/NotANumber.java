@@ -10,6 +10,6 @@ public class NotANumber implements PrimesResult {
     }
 
     public static boolean check(String input) {
-        return !input.matches("\\d+");
+        return !input.matches("-?\\d+");
     }
 }

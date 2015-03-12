@@ -63,7 +63,7 @@ describe("Primes UI", function () {
             expect(document.querySelector("#result").innerHTML).toEqual("24 = 2 x 3 x 4");
         });
 
-        it('displays error message when an error occured', function(){
+        it('displays error message for NumberIsTooBig input', function(){
             ajax.send = function() {
                 ajax.responseText = JSON.stringify({number:24, error:'the error message'});
                 ajax.onload();
@@ -74,7 +74,7 @@ describe("Primes UI", function () {
             expect(document.querySelector("#result").innerHTML).toEqual("the error message");
         });
 
-        it('displays specific message for NotANumber error', function(){
+        it('displays error message for NotANumber input', function(){
             ajax.send = function() {
                 ajax.responseText = JSON.stringify({number:'NaN', error:'not a number'});
                 ajax.onload();
@@ -83,6 +83,17 @@ describe("Primes UI", function () {
             primes.send();
 
             expect(document.querySelector("#result").innerHTML).toEqual("NaN is not a number");
+        });
+
+        it('displays error message for NegativeNumber input', function(){
+            ajax.send = function() {
+                ajax.responseText = JSON.stringify({number:-24, error:'-24 is not an integer > 1'});
+                ajax.onload();
+            };
+
+            primes.send();
+
+            expect(document.querySelector("#result").innerHTML).toEqual("-24 is not an integer &gt; 1");
         });
     });
 

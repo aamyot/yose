@@ -1,7 +1,8 @@
 package com.alexandreamyot.yose.web;
 
+import com.alexandreamyot.yose.primes.IsNotGreaterThanOne;
+import com.alexandreamyot.yose.primes.IsTooBig;
 import com.alexandreamyot.yose.primes.NotANumber;
-import com.alexandreamyot.yose.primes.NumberIsTooBig;
 import com.alexandreamyot.yose.primes.PrimesResult;
 import com.alexandreamyot.yose.primes.ValidResult;
 import com.google.gson.Gson;
@@ -44,8 +45,10 @@ public class Primes {
     private PrimesResult decompose(String input) {
         if (NotANumber.check(input)) {
             return new NotANumber(input);
-        } else if (NumberIsTooBig.check(input)) {
-            return new NumberIsTooBig(input);
+        } else if (IsTooBig.check(input)) {
+            return new IsTooBig(input);
+        } else if (IsNotGreaterThanOne.check(input)) {
+            return new IsNotGreaterThanOne(input);
         }
 
         return new ValidResult(input, primesOf(parseInt(input)));

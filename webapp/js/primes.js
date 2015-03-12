@@ -4,11 +4,9 @@ primes = {
         this.container = container;
         this.ajax = ajax;
 
-        container.addEventListener('DOMContentLoaded', function() {
-            container.querySelector('form#primes').addEventListener('submit', function(event) {
-                event.preventDefault();
-                primes.send();
-            });
+        this.container.querySelector('form#primes').addEventListener('submit', function(event) {
+            event.preventDefault();
+            primes.send();
         });
     },
 

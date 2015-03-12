@@ -3,12 +3,12 @@ package com.alexandreamyot.yose.primes;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.valueOf;
 
-public class NumberIsTooBig implements PrimesResult {
+public class IsTooBig implements PrimesResult {
 
     final int number;
     final String error = "too big number (>1e6)";
 
-    public NumberIsTooBig(String input) {
+    public IsTooBig(String input) {
         number = parseInt(input);
     }
 

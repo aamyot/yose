@@ -6,7 +6,9 @@
     <link href="../css/main.css" rel="stylesheet" type="text/css" />
     <script src="../js/primes.js" type="text/javascript"></script>
     <script>
-        primes.init(document, new XMLHttpRequest());
+        document.addEventListener('DOMContentLoaded', function() {
+            primes.init(document, new XMLHttpRequest());
+        });
     </script>
 </head>
 
