@@ -11,11 +11,11 @@ public class PrimesTest {
 
     @Test
     public void viewShouldIncludeAHtmlForm() {
-        assertThat(document("primes").getDocumentElement(), hasUniqueSelector("form", hasUniqueSelector("#title"),
-                                                                                      hasUniqueSelector("#invitation"),
-                                                                                      hasUniqueSelector("input#number[type='text']"),
-                                                                                      hasUniqueSelector("button#go"),
-                                                                                      hasUniqueSelector("#result"),
-                                                                                      hasUniqueSelector("#results")));
+        assertThat(document("webapp/views/primes.html").getDocumentElement(), hasUniqueSelector("form", hasUniqueSelector("#title"),
+                                                                                           hasUniqueSelector("#invitation"),
+                                                                                           hasUniqueSelector("input#number[type='text']"),
+                                                                                           hasUniqueSelector("button#go"),
+                                                                                           hasUniqueSelector("#result"),
+                                                                                           hasUniqueSelector("#results")));
     }
 }

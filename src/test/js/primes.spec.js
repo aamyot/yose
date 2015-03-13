@@ -65,13 +65,13 @@ describe("Primes UI", function () {
 
         it('displays error message for NumberIsTooBig input', function(){
             ajax.send = function() {
-                ajax.responseText = JSON.stringify({number:24, error:'the error message'});
+                ajax.responseText = JSON.stringify({number:1234567, error:'too big number (>1e6)'});
                 ajax.onload();
             };
 
             primes.send();
 
-            expect(document.querySelector("#result").innerHTML).toEqual("the error message");
+            expect(document.querySelector("#result").innerHTML).toEqual("too big number (&gt;1e6)");
         });
 
         it('displays error message for NotANumber input', function(){
@@ -98,13 +98,21 @@ describe("Primes UI", function () {
 
         it('displays result for multiple numbers', function(){
             ajax.send = function() {
-                ajax.responseText = JSON.stringify({number:-24, error:'-24 is not an integer > 1'});
+                ajax.responseText = JSON.stringify([
+                    {number:24, decomposition:[2,3,4]},
+                    {number: -24, error: '-24 is not an integer > 1'},
+                    {number:'NaN', error:'not a number'},
+                    {number:-24, error:'-24 is not an integer > 1'}
+                ]);
                 ajax.onload();
             };
 
             primes.send();
 
-            expect(document.querySelector("#result").innerHTML).toEqual("-24 is not an integer &gt; 1");
+            expect(document.querySelector("#results li:nth-child(1)").innerHTML).toEqual("24 = 2 x 3 x 4");
+            expect(document.querySelector("#results li:nth-child(2)").innerHTML).toEqual("-24 is not an integer &gt; 1");
+            expect(document.querySelector("#results li:nth-child(3)").innerHTML).toEqual("NaN is not a number");
+            expect(document.querySelector("#results li:nth-child(4)").innerHTML).toEqual("-24 is not an integer &gt; 1");
         });
     });
 
