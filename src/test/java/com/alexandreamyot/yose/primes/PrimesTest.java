@@ -16,6 +16,6 @@ public class PrimesTest {
                                                                                            hasUniqueSelector("input#number[type='text']"),
                                                                                            hasUniqueSelector("button#go"),
                                                                                            hasUniqueSelector("#result"),
-                                                                                           hasUniqueSelector("#results")));
+                                                                                           hasUniqueSelector("ol#results")));
     }
 }
