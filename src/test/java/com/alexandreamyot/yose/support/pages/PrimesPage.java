@@ -1,8 +1,6 @@
 package com.alexandreamyot.yose.support.pages;
 
-import static com.alexandreamyot.yose.support.Browser.element;
-import static com.alexandreamyot.yose.support.Browser.input;
-import static com.alexandreamyot.yose.support.Browser.navigateTo;
+import static com.alexandreamyot.yose.support.Browser.*;
 import static java.util.stream.IntStream.range;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -40,7 +38,7 @@ public class PrimesPage {
     }
 
     public void hasResults(String... results) {
-        range(0, results.length).forEach(n -> assertThat(result(n), equalTo(results[n])));
+        range(0, results.length).forEach(n -> assertThat(result(n + 1), equalTo(results[n])));
     }
 
     private String result(int n) {

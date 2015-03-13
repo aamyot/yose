@@ -14,24 +14,40 @@ primes = {
         var self = this;
         this.ajax.onload = function() {
             var response = JSON.parse(self.ajax.responseText);
-            self.container.querySelector('#result').innerHTML = self.renderResponse(response);
+            if (response instanceof Array) {
+                self.container.querySelector('#results').innerHTML = self.renderMultiple(response);
+            } else {
+                self.container.querySelector('#result').innerHTML = self.renderSingle(response);
+            }
+
         };
 
         this.ajax.open('POST', '/primeFactors', true);
         this.ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        this.ajax.send('number=' + this.container.querySelector('input#number').value);
+        this.ajax.send(this.data(this.container.querySelector('input#number').value));
     },
 
-    renderResponse: function(response) {
-        if (response.decomposition) {
-            return this.renderPrimes(response.number, response.decomposition);
-        } else if (response.error === 'not a number') {
-            return response.number + ' is not a number';
-        } else if (response.error) {
-            return response.error;
+    data: function(input) {
+        return input.split(',').map(function(number) { return 'number=' + number.trim() }).join('&');
+    },
+
+    renderMultiple: function(results) {
+        var decompositions = '';
+        var self = this;
+        results.forEach(function(single) {
+            decompositions += '<li>' + self.renderSingle(single) + '</li>';
+        });
+        return decompositions;
+    },
+
+    renderSingle: function(result) {
+        if (result.error === 'not a number') {
+            return result.number + ' is not a number';
+        } else if (result.error) {
+            return result.error;
         }
 
-        return '';
+        return this.renderPrimes(result.number, result.decomposition);;
     },
 
     renderPrimes: function(number, primes) {

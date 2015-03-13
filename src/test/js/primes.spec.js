@@ -10,16 +10,18 @@ describe("Primes UI", function () {
 
     var document = require('domino').createWindow('' +
         '<form id="primes">' +
-        '   <input type="text" id="number" value="24"/>' +
+        '   <input type="text" id="number" />' +
         '   <div id="result"></div>' +
+        '   <ol id="results"></ol>' +
         '</form>'
     ).document;
 
     beforeEach(function () {
+        document.querySelector('#number').value = 24;
         primes.init(document, ajax);
     });
 
-    describe('Form', function() {
+    describe('Submitting the form', function() {
 
         it('opens a POST request', function() {
             spyOn(ajax, 'open');
@@ -37,12 +39,25 @@ describe("Primes UI", function () {
             expect(ajax.setRequestHeader).toHaveBeenCalledWith('Content-type', 'application/x-www-form-urlencoded');
         });
 
-        it('sends the value of the input form', function () {
+        it('sends a single value', function () {
             spyOn(ajax, 'send');
 
             primes.send();
 
             expect(ajax.send).toHaveBeenCalledWith("number=24");
+        });
+
+        it('parses multiple entries', function() {
+            expect(primes.data('1, 2, 3')).toEqual('number=1&number=2&number=3');
+        }),
+
+        xit('sends multiple values', function () {
+            spyOn(ajax, 'send');
+
+            document.querySelector('#number').value = "1, hello, 3";
+            primes.send();
+
+            expect(ajax.send).toHaveBeenCalledWith("number=1&number=hello&number=3");
         });
     });
 
