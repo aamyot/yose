@@ -29,16 +29,23 @@ public class PortfolioChallengeTest {
     }
 
     @Test
-    public void homeIncludesALinkToMyContact() throws IOException {
+    public void includesALinkToMyContact() throws IOException {
         HttpResponse response = request.get("/");
 
         assertThat(response).hasBodyText(containsString("<a id=\"contact-me-link\" href=\"http://ca.linkedin.com/in/alexandreamyot\">Contact</a>"));
     }
 
     @Test
-    public void homeIncludesALinkToThePinkChallenge() throws IOException {
+    public void includesALinkToThePingChallenge() throws IOException {
         HttpResponse response = request.get("/");
 
         assertThat(response).hasBodyText(containsString("<a id=\"ping-challenge-link\" href=\"/ping\">Ping</a>"));
+    }
+
+    @Test
+    public void includesALinkToThePrimeFactorsChallenge() throws IOException {
+        HttpResponse response = request.get("/");
+
+        assertThat(response).hasBodyText(containsString("<a id=\"prime-factors-decomposition-link\" href=\"/primeFactors/ui\">Prime Factors</a>"));
     }
 }

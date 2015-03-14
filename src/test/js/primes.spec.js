@@ -124,10 +124,10 @@ describe("Primes UI", function () {
 
             primes.send();
 
-            expect(document.querySelector("#results li:nth-child(1)").innerHTML).toEqual("24 = 2 x 3 x 4");
-            expect(document.querySelector("#results li:nth-child(2)").innerHTML).toEqual("-24 is not an integer &gt; 1");
-            expect(document.querySelector("#results li:nth-child(3)").innerHTML).toEqual("NaN is not a number");
-            expect(document.querySelector("#results li:nth-child(4)").innerHTML).toEqual("-24 is not an integer &gt; 1");
+            expect(document.querySelector("ol#results li:nth-child(1)").innerHTML).toEqual("24 = 2 x 3 x 4");
+            expect(document.querySelector("ol#results li:nth-child(2)").innerHTML).toEqual("-24 is not an integer &gt; 1");
+            expect(document.querySelector("ol#results li:nth-child(3)").innerHTML).toEqual("NaN is not a number");
+            expect(document.querySelector("ol#results li:nth-child(4)").innerHTML).toEqual("-24 is not an integer &gt; 1");
         });
     });
 
