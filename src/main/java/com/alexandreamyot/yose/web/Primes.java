@@ -1,10 +1,6 @@
 package com.alexandreamyot.yose.web;
 
-import com.alexandreamyot.yose.primes.IsNotGreaterThanOne;
-import com.alexandreamyot.yose.primes.IsTooBig;
-import com.alexandreamyot.yose.primes.NotANumber;
-import com.alexandreamyot.yose.primes.PrimesResult;
-import com.alexandreamyot.yose.primes.ValidResult;
+import com.alexandreamyot.yose.primes.*;
 import com.google.gson.Gson;
 import com.vtence.molecule.Request;
 import com.vtence.molecule.Response;
@@ -14,6 +10,7 @@ import com.vtence.molecule.templating.Template;
 import java.util.List;
 
 import static com.alexandreamyot.yose.primes.Pythagoras.primesOf;
+import static com.alexandreamyot.yose.primes.Scribe.romanToArabic;
 import static com.vtence.molecule.http.HttpStatus.OK;
 import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toList;
@@ -43,7 +40,9 @@ public class Primes {
     }
 
     private PrimesResult decompose(String input) {
-        if (NotANumber.check(input)) {
+        if (RomanNumber.check(input)) {
+            return new RomanNumber(input, romansOf(input));
+        } else if (NotANumber.check(input)) {
             return new NotANumber(input);
         } else if (IsTooBig.check(input)) {
             return new IsTooBig(input);
@@ -52,6 +51,10 @@ public class Primes {
         }
 
         return new ValidResult(input, primesOf(parseInt(input)));
+    }
+
+    private List<String> romansOf(String input) {
+        return primesOf(romanToArabic(input)).stream().map(Scribe::arabicToRoman).collect(toList());
     }
 
     private String toJson(List<PrimesResult> results) {

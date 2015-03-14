@@ -133,4 +133,13 @@ public class PrimeFactorsChallengeTest {
                         "too big number (>1e6)");
     }
 
+    @Test
+    public void decomposeARomanNumber() throws IOException {
+        HttpResponse response = request.get("/primeFactors?number=LX");
+
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText("{\"number\":\"LX\",\"decomposition\":[\"II\",\"II\",\"III\",\"V\"]}");
+    }
+
 }
