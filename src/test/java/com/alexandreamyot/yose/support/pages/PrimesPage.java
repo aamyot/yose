@@ -1,6 +1,8 @@
 package com.alexandreamyot.yose.support.pages;
 
-import static com.alexandreamyot.yose.support.Browser.*;
+import static com.alexandreamyot.yose.support.Browser.element;
+import static com.alexandreamyot.yose.support.Browser.input;
+import static com.alexandreamyot.yose.support.Browser.navigateTo;
 import static java.util.stream.IntStream.range;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -30,11 +32,7 @@ public class PrimesPage {
     }
 
     public void hasResult(String result) {
-        assertThat(result(), equalTo(result));
-    }
-
-    public String result() {
-        return element(id("result")).getText();
+        assertThat(element(id("result")).getText(), equalTo(result));
     }
 
     public void hasResults(String... results) {
@@ -45,4 +43,7 @@ public class PrimesPage {
         return element(id("results")).findElement(xpath("li[" + n + "]")).getText();
     }
 
+    public void hasLastResult(String result) {
+        assertThat(element(id("last-decomposition")).getText(), equalTo(result));
+    }
 }

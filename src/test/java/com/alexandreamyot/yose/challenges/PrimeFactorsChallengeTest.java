@@ -6,6 +6,7 @@ import com.vtence.molecule.testing.HttpRequest;
 import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -134,12 +135,24 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    public void decomposeARomanNumber() throws IOException {
+    public void decomposesARomanNumber() throws IOException {
         HttpResponse response = request.get("/primeFactors?number=LX");
 
         assertThat(response).hasStatusCode(200)
                             .hasContentType("application/json")
                             .hasBodyText("{\"number\":\"LX\",\"decomposition\":[\"II\",\"II\",\"III\",\"V\"]}");
+    }
+
+    @Test
+    @Ignore
+    public void displaysTheResultOfTheLastDecomposition() throws IOException {
+        PrimesPage page = new PrimesPage();
+        page.go();
+        page.number("18");
+        page.submit();
+
+        page.go();
+        page.hasLastResult("18 = 2 x 3 x 3");
     }
 
 }
