@@ -11,12 +11,6 @@ public class Scribe {
     public static Integer romanToArabic(String input) {
         Integer acc = valueOf(0);
 
-        if (input.isEmpty()) {
-            return acc;
-        }
-
-
-
         for (Entry<String, Integer> entry : RomanDictionnary.toArabic().entrySet()) {
             String roman = entry.getKey();
             while (input.startsWith(roman)) {
