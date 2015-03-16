@@ -11,6 +11,12 @@ public class Scribe {
     public static Integer romanToArabic(String input) {
         Integer acc = valueOf(0);
 
+        if (input.isEmpty()) {
+            return acc;
+        }
+
+
+
         for (Entry<String, Integer> entry : RomanDictionnary.toArabic().entrySet()) {
             String roman = entry.getKey();
             while (input.startsWith(roman)) {
@@ -37,27 +43,29 @@ public class Scribe {
     }
 
     private static class RomanDictionnary {
+        static Map<String, Integer> DICTIONARY = new LinkedHashMap<String, Integer>() {{
+            put("M", 1000);
+            put("CM", 900);
+            put("D", 500);
+            put("CD", 400);
+            put("C", 100);
+            put("XC", 90);
+            put("L", 50);
+            put("XL", 40);
+            put("X", 10);
+            put("IX", 9);
+            put("V", 5);
+            put("IV", 4);
+            put("I", 1);
+        }};
+
         static Map<String, Integer> toArabic() {
-            return new LinkedHashMap<String, Integer>() {{
-                put("M", 1000);
-                put("CM", 900);
-                put("D", 500);
-                put("CD", 400);
-                put("C", 100);
-                put("XC", 90);
-                put("L", 50);
-                put("XL", 40);
-                put("X", 10);
-                put("IX", 9);
-                put("V", 5);
-                put("IV", 4);
-                put("I", 1);
-            }};
+            return DICTIONARY;
         }
 
         static Map<Integer, String> fromArabic() {
             Map<Integer, String> arabicToRoman = new LinkedHashMap<>();
-            for (Entry<String, Integer> entry : toArabic().entrySet()) {
+            for (Entry<String, Integer> entry : DICTIONARY.entrySet()) {
                 arabicToRoman.put(entry.getValue(), entry.getKey());
             }
             return arabicToRoman;
