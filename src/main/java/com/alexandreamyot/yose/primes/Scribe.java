@@ -2,7 +2,6 @@ package com.alexandreamyot.yose.primes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Scribe {
 
@@ -23,38 +22,17 @@ public class Scribe {
     }};
 
     public static int romanToArabic(String input) {
-        int acc = 0;
-
-        if (input.isEmpty()) {
-            return acc;
-        }
-
-        for (Entry<String, Integer> entry : ROMAN_DICTIONARY.entrySet()) {
-            if (input.startsWith(entry.getKey())) {
-                acc += entry.getValue() + romanToArabic(input.substring(entry.getKey().length()));
-                break;
-            }
-        }
-
-        return acc;
+        return ROMAN_DICTIONARY.entrySet().stream()
+                               .filter(entry -> input.startsWith(entry.getKey()))
+                               .map(entry -> entry.getValue() + romanToArabic(input.substring(entry.getKey().length())))
+                               .findFirst().orElse(0);
 
     }
 
     public static String arabicToRoman(int number) {
-        String acc = "";
-
-        if (number < 1) {
-            return acc;
-        }
-
-        for (Entry<String, Integer> entry : ROMAN_DICTIONARY.entrySet()) {
-            if (number >= entry.getValue()) {
-                acc += entry.getKey() + arabicToRoman(number - entry.getValue());
-                break;
-            }
-        }
-
-        return acc;
-
+        return ROMAN_DICTIONARY.entrySet().stream()
+                               .filter(entry -> number >= entry.getValue())
+                               .map(entry -> entry.getKey() + arabicToRoman(number - entry.getValue()))
+                               .findFirst().orElse("");
     }
 }
