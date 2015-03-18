@@ -93,4 +93,27 @@ describe("Primes Form", function () {
 
     });
 
+    it('clears the results of previous decomposition', function(){
+        spyOn(form, 'clear');
+
+        ajax.send = function() {
+            ajax.responseText = JSON.stringify({number:8, decomposition:[2,2,2]});
+            ajax.onload();
+        };
+
+        form.send(container, ajax);
+
+        expect(form.clear).toHaveBeenCalledWith(container);
+    });
+
+    it('clears both single and multiple decompositions', function(){
+        container.querySelector("#result").innerHTML = "single decomposition";
+        container.querySelector("#results").innerHTML = "multiple decomposition";
+
+        form.clear(container);
+
+        expect(container.querySelector("#result").innerHTML).toEqual("");
+        expect(container.querySelector("#results").innerHTML).toEqual("");
+    });
+
 });

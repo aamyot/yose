@@ -32,6 +32,17 @@ describe("Primes Last Decomposition", function () {
 
     describe('Rendering', function() {
 
+        it('displays nothing if there is no last decomposition', function () {
+            ajax.send = function () {
+                ajax.responseText = null;
+                ajax.onload();
+            };
+
+            last.load(container, ajax);
+
+            expect(container.querySelector("#last-decomposition").innerHTML).toEqual("");
+        });
+
         it('displays the last decomposition', function () {
             ajax.send = function () {
                 ajax.responseText = JSON.stringify({number: 24, decomposition: [2, 3, 4]});
