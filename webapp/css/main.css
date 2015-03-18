@@ -12,3 +12,17 @@ ol#results {
     padding: 0;
     margin: 0;
 }
+
+table#minesweeper-grid {
+    border-collapse: collapse;
+}
+
+table#minesweeper-grid, table#minesweeper-grid td {
+    border: 1px solid black;
+}
+
+table#minesweeper-grid td {
+    height: 30px;
+    width: 30px;
+    background-color: lightgray;
+}

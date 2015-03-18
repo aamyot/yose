@@ -1,6 +1,7 @@
 package com.alexandreamyot.yose;
 
 import com.alexandreamyot.yose.web.Home;
+import com.alexandreamyot.yose.web.Minesweeper;
 import com.alexandreamyot.yose.web.Ping;
 import com.alexandreamyot.yose.web.Primes;
 import com.vtence.molecule.WebServer;
@@ -49,6 +50,7 @@ public class Yose {
             map("/primeFactors").via(GET, POST).to(primes::list);
             get("/primeFactors/ui").to(primes::ui);
             get("/primeFactors/last").to(primes::last);
+            get("/minesweeper").to(new Minesweeper(templates.named("minesweeper")));
         }};
     }
 
