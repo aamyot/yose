@@ -21,8 +21,9 @@ public class MinesweeperPage {
     }
 
     public void displaysGrid(int rows, int cols) {
-        rangeClosed(1, rows).forEach(row -> rangeClosed(1, cols)
-                .forEach(col -> assertThat(element(id(cellId(row, col))), is(notNullValue()))));
+        rangeClosed(1, rows).forEach(row ->
+            rangeClosed(1, cols).forEach(col ->
+                assertThat(element(id(cellId(row, col))), is(notNullValue()))));
     }
 
     private String cellId(int row, int col) {
