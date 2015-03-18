@@ -48,6 +48,7 @@ public class Yose {
             get("/ping").to(new Ping());
             map("/primeFactors").via(GET, POST).to(primes::list);
             get("/primeFactors/ui").to(primes::ui);
+            get("/primeFactors/last").to(primes::last);
         }};
     }
 

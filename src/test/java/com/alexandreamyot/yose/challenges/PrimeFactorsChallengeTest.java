@@ -6,7 +6,6 @@ import com.vtence.molecule.testing.HttpRequest;
 import com.vtence.molecule.testing.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -105,6 +104,17 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
+    public void storesTheLastDecomposition() throws IOException {
+        request.get("/primeFactors?number=8");
+
+        HttpResponse response = request.get("/primeFactors/last");
+
+        assertThat(response).hasStatusCode(200)
+                            .hasContentType("application/json")
+                            .hasBodyText("{\"number\":8,\"decomposition\":[2,2,2]}");
+    }
+
+    @Test
     public void displaysThePrimesNumber() {
         PrimesPage page = new PrimesPage();
         page.go();
@@ -144,7 +154,6 @@ public class PrimeFactorsChallengeTest {
     }
 
     @Test
-    @Ignore
     public void displaysTheResultOfTheLastDecomposition() throws IOException {
         PrimesPage page = new PrimesPage();
         page.go();

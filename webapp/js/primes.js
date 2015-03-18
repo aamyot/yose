@@ -21,18 +21,18 @@ primes = {
 
 primes.form = {
     init: function (container, ajax) {
+        var send = this.send;
         container.querySelector('form#primes').addEventListener('submit', function (event) {
             event.preventDefault();
-            primes.send(container, ajax);
+            send(container, ajax);
         });
     },
 
     send: function (container, ajax) {
-        var self = this;
         ajax.onload = function () {
             var results = JSON.parse(ajax.responseText);
             if (results instanceof Array) {
-                container.querySelector('#results').innerHTML = self.formatMultiple(primes.renderMultiple(results));
+                container.querySelector('#results').innerHTML = primes.form.formatMultiple(primes.renderMultiple(results));
             } else {
                 container.querySelector('#result').innerHTML = primes.renderSingle(results);
             }
@@ -40,7 +40,7 @@ primes.form = {
 
         ajax.open('POST', '/primeFactors', true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.send(this.data(container.querySelector('input#number').value));
+        ajax.send(primes.form.data(container.querySelector('input#number').value));
     },
 
     data: function (input) {
@@ -50,7 +50,7 @@ primes.form = {
     },
 
     formatMultiple: function(results) {
-        return results.map(function(result) {return '<li>' + result + '</li>'})
+        return results.map(function(result) {return '<li>' + result + '</li>'}).join('');
     }
 };
 

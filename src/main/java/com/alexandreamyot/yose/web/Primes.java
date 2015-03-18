@@ -1,6 +1,12 @@
 package com.alexandreamyot.yose.web;
 
-import com.alexandreamyot.yose.primes.*;
+import com.alexandreamyot.yose.primes.IsNotGreaterThanOne;
+import com.alexandreamyot.yose.primes.IsTooBig;
+import com.alexandreamyot.yose.primes.NotANumber;
+import com.alexandreamyot.yose.primes.PrimesResult;
+import com.alexandreamyot.yose.primes.RomanNumber;
+import com.alexandreamyot.yose.primes.Scribe;
+import com.alexandreamyot.yose.primes.ValidResult;
 import com.google.gson.Gson;
 import com.vtence.molecule.Request;
 import com.vtence.molecule.Response;
@@ -20,6 +26,7 @@ public class Primes {
     public static final Object EMPTY_CONTEXT = new Object();
 
     private final Template view;
+    private PrimesResult lastDecomposition;
 
     public Primes(Template view) {
         this.view = view;
@@ -28,10 +35,21 @@ public class Primes {
 
     public void list(Request request, Response response) throws Exception {
         List<PrimesResult> results = request.parameters("number").stream().map(this::decompose).collect(toList());
+        storeLastDecomposition(results);
         response.body(toJson(results));
         response.contentType(MimeTypes.JSON);
     }
 
+    private void storeLastDecomposition(List<PrimesResult> results) {
+        if (!results.isEmpty()) {
+            lastDecomposition = results.get(0);
+        }
+    }
+
+    public void last(Request request, Response response) throws Exception {
+        response.contentType(MimeTypes.JSON);
+        response.body(toJson(lastDecomposition));
+    }
 
     public void ui(Request request, Response response) throws Exception {
         response.status(OK);
@@ -55,6 +73,10 @@ public class Primes {
 
     private List<String> romansOf(String input) {
         return primesOf(romanToArabic(input)).stream().map(Scribe::arabicToRoman).collect(toList());
+    }
+
+    private String toJson(PrimesResult result) {
+        return new Gson().toJson(result);
     }
 
     private String toJson(List<PrimesResult> results) {
