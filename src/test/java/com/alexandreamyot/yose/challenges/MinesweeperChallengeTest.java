@@ -31,4 +31,16 @@ public class MinesweeperChallengeTest {
         minesweeperPage.displaysGrid(8, 8);
     }
 
+    @Test
+    public void loadsTheGrid() throws InterruptedException {
+        MinesweeperPage minesweeperPage = new MinesweeperPage();
+        minesweeperPage.go();
+        minesweeperPage.load(new String[][]{
+                {"empty", "empty"},
+                {"empty", "bomb"}
+        });
+        minesweeperPage.clickOnCell(1, 1);
+        minesweeperPage.cellHasClassName(1, 1, "lost");
+    }
+
 }

@@ -26,3 +26,7 @@ table#minesweeper-grid td {
     width: 30px;
     background-color: lightgray;
 }
+
+table#minesweeper-grid td.lost {
+    background-color: red;
+}

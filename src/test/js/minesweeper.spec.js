@@ -9,14 +9,22 @@ describe("Minesweeper", function () {
         document = require('domino').createWindow(html).document;
     });
 
-    it('loads the grid', function() {
-        minesweeper.grid = [
+    it('loads the grid and handles the click', function() {
+        var grid = [
             ['empty', 'empty'],
             ['empty', 'bomb']
         ];
 
-        minesweeper.load(document);
+        minesweeper.load(grid, document);
+        clickOnCell(document.querySelector("#cell-2x2"));
 
+        expect(document.querySelector("#cell-1x1").className).toEqual("");
         expect(document.querySelector("#cell-2x2").className).toEqual("lost");
     });
+
+    var clickOnCell = function(cell) {
+        var click = document.createEvent('Event');
+        click.initEvent('click', true, true);
+        cell.dispatchEvent(click);
+    };
 });
