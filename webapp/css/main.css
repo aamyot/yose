@@ -24,9 +24,13 @@ table#minesweeper-grid, table#minesweeper-grid td {
 table#minesweeper-grid td {
     height: 30px;
     width: 30px;
-    background-color: lightgray;
+    background-color: darkgray;
 }
 
 table#minesweeper-grid td.lost {
     background-color: red;
+}
+
+table#minesweeper-grid td.safe {
+    background-color: lightgray;
 }
