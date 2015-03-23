@@ -7,19 +7,19 @@ describe("Minesweeper", function () {
         document = require('domino').createWindow(html).document;
     });
 
-    it('handles clicking on a bomb', function() {
+    xit('handles clicking on a bomb', function() {
         var grid = [
             ['empty', 'empty'],
             ['empty', 'bomb']
         ];
 
         minesweeper.load(grid);
-        clickOnCell(document.querySelector("#cell-2x2"));
+        clickOnCell(document.querySelector("#cell-1x1"));
 
-        expect(document.querySelector("#cell-2x2").className).toEqual("lost");
+        expect(document.querySelector("#cell-1x1")).toEqual("lost");
     });
 
-    it('handles clicking on a safe cell', function() {
+    xit('handles clicking on a safe cell', function() {
         var grid = [
             ['empty', 'empty', 'empty'],
             ['empty', 'bomb', 'empty'],
