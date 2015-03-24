@@ -25,6 +25,7 @@ table#minesweeper-grid td {
     height: 30px;
     width: 30px;
     background-color: darkgray;
+    text-align: center;
 }
 
 table#minesweeper-grid td.lost {

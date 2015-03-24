@@ -5,37 +5,77 @@ describe("Minesweeper", function () {
     beforeEach(function() {
         var html = require('fs').readFileSync('./webapp/views/minesweeper.html').toString();
         document = require('domino').createWindow(html).document;
-    });
 
-    xit('handles clicking on a bomb', function() {
-        var grid = [
-            ['empty', 'empty'],
-            ['empty', 'bomb']
+        var grid =  [
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'empty', 'bomb' , 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'bomb',  'empty', 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty'],
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty']
         ];
-
-        minesweeper.load(grid);
-        clickOnCell(document.querySelector("#cell-1x1"));
-
-        expect(document.querySelector("#cell-1x1")).toEqual("lost");
+        board = new minesweeper.Board(grid);
+        board.render();
     });
 
-    xit('handles clicking on a safe cell', function() {
-        var grid = [
-            ['empty', 'empty', 'empty'],
-            ['empty', 'bomb', 'empty'],
-            ['empty', 'bomb', 'empty']
-        ];
+    describe("Rendering", function() {
 
-        minesweeper.load(grid);
-        clickOnCell(document.querySelector("#cell-2x1"));
+        it('renders a 8x8 grid', function() {
+            for (var row = 1; row <= 8; row++) {
+                for (var col = 1; col <= 8; col++) {
+                    //expect(cell(row, col)).toBeDefined();
+                }
+            }
+        });
 
-        expect(document.querySelector("#cell-2x1").className).toEqual("safe");
-        expect(document.querySelector("#cell-2x1").innerHTML).toEqual("2");
+        it('calls the reset function', function() {
+            spyOn(board, 'reset');
+
+            board.render();
+
+            expect(board.reset).toHaveBeenCalled();
+        });
+
+        it('resetting the board clears the HTML', function() {
+            board.reset();
+
+            expect(document.querySelector("#minesweeper-grid").innerHTML).toEqual("");
+        });
+
     });
 
-    var clickOnCell = function(cell) {
-        var click = document.createEvent('Event');
-        click.initEvent('click', true, true);
-        cell.dispatchEvent(click);
-    };
+    describe("Actions", function() {
+
+        it('handles clicking on a bomb', function () {
+            clickOnCell(4, 4);
+
+            expect(cell(4, 4).className).toEqual("lost");
+        });
+
+        it('handles clicking on a safe cell', function () {
+            clickOnCell(5, 4);
+
+            expect(cell(5, 4).className).toEqual("safe");
+            expect(cell(5, 4).innerHTML).toEqual("2");
+        });
+    });
+
+    xit('returns a cell', function() {
+
+        expect(board.cell(5, 4)).toEqual(cell(5, 4));
+    });
+
 });
+
+
+clickOnCell = function(row, col) {
+    var click = document.createEvent('Event');
+    click.initEvent('click', true, true);
+    cell(row, col).dispatchEvent(click);
+};
+
+cell = function(row, col) {
+    return document.querySelector("#cell-"+ row + "x" + col);
+};
