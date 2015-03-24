@@ -25,7 +25,7 @@ describe("Minesweeper", function () {
         it('renders a 8x8 grid', function() {
             for (var row = 1; row <= 8; row++) {
                 for (var col = 1; col <= 8; col++) {
-                    //expect(cell(row, col)).toBeDefined();
+                    expect(cell(row, col)).toBeDefined();
                 }
             }
         });
