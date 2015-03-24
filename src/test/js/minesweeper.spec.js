@@ -25,7 +25,7 @@ describe("Minesweeper", function () {
         it('renders a 8x8 grid', function() {
             for (var row = 1; row <= 8; row++) {
                 for (var col = 1; col <= 8; col++) {
-                    expect(cell(row, col)).toBeDefined();
+                    expect(utils.cell(row, col)).toBeDefined();
                 }
             }
         });
@@ -49,28 +49,43 @@ describe("Minesweeper", function () {
     describe("Actions", function() {
 
         it('handles trapped cell', function () {
-            clickOnCell(4, 4);
+            var cell = utils.cell(4, 4);
 
-            expect(cell(4, 4).className).toEqual("lost");
+            utils.clickOnCell(cell);
+
+            expect(cell.className).toEqual("lost");
         });
 
-        it('handles safe cell', function () {
-            clickOnCell(4, 5);
+        it('handles safe cell with bombs around', function () {
+            var cell = utils.cell(4, 5);
 
-            expect(cell(4, 5).className).toEqual("safe");
-            expect(cell(4, 5).innerHTML).toEqual("2");
+            utils.clickOnCell(cell);
+
+            expect(cell.className).toEqual("safe");
+            expect(cell.innerHTML).toEqual("2");
+        });
+
+        it('handles safe cell with no bomb around', function () {
+            var cell = utils.cell(5, 2);
+
+            utils.clickOnCell(cell);
+
+            expect(cell.className).toEqual("safe");
+            expect(cell.innerHTML).toEqual("");
         });
     });
 
 });
 
+utils = {
+    clickOnCell: function(cell) {
+        var click = document.createEvent('Event');
+        click.initEvent('click', true, true);
+        cell.dispatchEvent(click);
+    },
 
-clickOnCell = function(row, col) {
-    var click = document.createEvent('Event');
-    click.initEvent('click', true, true);
-    cell(row, col).dispatchEvent(click);
+    cell: function cell(row, col) {
+        return document.querySelector("#cell-"+ row + "x" + col);
+    }
 };
 
-cell = function(row, col) {
-    return document.querySelector("#cell-"+ row + "x" + col);
-};

@@ -55,4 +55,8 @@ public class MinesweeperPage {
         assertThat(element(id(cellId(row, col))).getAttribute("class"), equalTo(cssClass));
 
     }
+
+    public void cellContent(int row, int col, String content) {
+        assertThat(element(id(cellId(row, col))).getText(), equalTo(content));
+    }
 }

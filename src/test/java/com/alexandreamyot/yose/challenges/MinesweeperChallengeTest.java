@@ -48,11 +48,28 @@ public class MinesweeperChallengeTest {
         MinesweeperPage minesweeperPage = new MinesweeperPage();
         minesweeperPage.go();
         minesweeperPage.load(new String[][]{
-                {"empty", "empty"},
-                {"empty", "bomb"}
+                {"empty", "empty", "bomb"},
+                {"empty", "bomb",  "empty"},
+                {"empty", "empty", "empty"}
         });
-        minesweeperPage.clickOnCell(1, 0);
-        minesweeperPage.cellHasClassName(1, 0, "safe");
+        minesweeperPage.clickOnCell(1, 2);
+        minesweeperPage.cellHasClassName(1, 2, "safe");
+        minesweeperPage.cellContent(1, 2, "2");
+    }
+
+    @Test
+    public void handlesSafeCellWithZeroBombAround() throws InterruptedException {
+        MinesweeperPage minesweeperPage = new MinesweeperPage();
+        minesweeperPage.go();
+        minesweeperPage.load(new String[][]{
+                {"empty", "empty", "bomb" , "empty"},
+                {"empty", "bomb" , "empty", "empty"},
+                {"empty", "empty", "empty", "empty"},
+                {"empty", "empty", "empty", "empty"}
+        });
+        minesweeperPage.clickOnCell(3, 0);
+        minesweeperPage.cellHasClassName(3, 0, "safe");
+        minesweeperPage.cellContent(3, 0, "");
     }
 
 }

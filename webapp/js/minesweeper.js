@@ -80,7 +80,11 @@ minesweeper.Cell.prototype = {
 
     markAsSafe: function() {
         this.elem.setAttribute("class", "safe");
-        this.elem.innerHTML = this.bombsAround();
+
+        var bombsAround = this.bombsAround();
+        if (bombsAround > 0) {
+            this.elem.innerHTML = bombsAround;
+        }
     },
 
     id: function() {
