@@ -55,10 +55,10 @@ describe("Minesweeper", function () {
         });
 
         it('handles safe cell', function () {
-            clickOnCell(5, 4);
+            clickOnCell(4, 5);
 
-            expect(cell(5, 4).className).toEqual("safe");
-            expect(cell(5, 4).innerHTML).toEqual("2");
+            expect(cell(4, 5).className).toEqual("safe");
+            expect(cell(4, 5).innerHTML).toEqual("2");
         });
     });
 

@@ -24,7 +24,7 @@ minesweeper.Board.prototype = {
         for (var row = 0; row < this.board.length; row++) {
             var line = container.appendChild(document.createElement("tr"));
             for (var col = 0; col < this.board[row].length; col++) {
-                line.appendChild(this.board[row][col].render());
+                line.appendChild(this.board[row][col].elem);
             }
         }
     },
@@ -56,35 +56,31 @@ minesweeper.Board.prototype = {
 minesweeper.Cell = function(row, col, state) {
     this.row = row;
     this.col = col;
+    this.elem = this.createElement();
     this.state = state;
 };
 
 minesweeper.Cell.prototype = {
-    render: function() {
-        var td = this.createElement();
+    createElement: function() {
+        var td = document.createElement("td");
+        td.setAttribute("id", this.id());
 
         var self = this;
         td.addEventListener('click', function(event) {
-            if (self.state == "bomb") self.markAsFail(td);
-            else self.markAsSafe(td);
+            if (self.state == "bomb") self.markAsFail();
+            else self.markAsSafe();
         });
 
         return td;
     },
 
-    createElement: function() {
-        var td = document.createElement("td");
-        td.setAttribute("id", this.id());
-        return td;
+    markAsFail: function() {
+        this.elem.setAttribute("class", "lost")
     },
 
-    markAsFail: function(td) {
-        td.setAttribute("class", "lost")
-    },
-
-    markAsSafe: function(td) {
-        td.setAttribute("class", "safe");
-        td.innerHTML = this.bombsAround();
+    markAsSafe: function() {
+        this.elem.setAttribute("class", "safe");
+        this.elem.innerHTML = this.bombsAround();
     },
 
     id: function() {
