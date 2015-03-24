@@ -11,7 +11,8 @@
         });
 
         load = function() {
-            new minesweeper.Board(document.grid).render();
+            board = new minesweeper.Board(document.grid);
+            board.render();
         };
     </script>
 </head>

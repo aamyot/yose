@@ -48,23 +48,18 @@ describe("Minesweeper", function () {
 
     describe("Actions", function() {
 
-        it('handles clicking on a bomb', function () {
+        it('handles trapped cell', function () {
             clickOnCell(4, 4);
 
             expect(cell(4, 4).className).toEqual("lost");
         });
 
-        it('handles clicking on a safe cell', function () {
+        it('handles safe cell', function () {
             clickOnCell(5, 4);
 
             expect(cell(5, 4).className).toEqual("safe");
             expect(cell(5, 4).innerHTML).toEqual("2");
         });
-    });
-
-    xit('returns a cell', function() {
-
-        expect(board.cell(5, 4)).toEqual(cell(5, 4));
     });
 
 });
