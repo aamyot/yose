@@ -1,4 +1,5 @@
 require('../../../webapp/js/minesweeper');
+require('./minesweeper.utils');
 
 describe("Minesweeper", function () {
 
@@ -18,32 +19,6 @@ describe("Minesweeper", function () {
         ];
         board = new minesweeper.Board(grid);
         board.render();
-    });
-
-    describe("Rendering", function() {
-
-        it('renders a 8x8 grid', function() {
-            for (var row = 1; row <= 8; row++) {
-                for (var col = 1; col <= 8; col++) {
-                    expect(utils.cell(row, col)).toBeDefined();
-                }
-            }
-        });
-
-        it('calls the reset function', function() {
-            spyOn(board, 'reset');
-
-            board.render();
-
-            expect(board.reset).toHaveBeenCalled();
-        });
-
-        it('resetting the board clears the HTML', function() {
-            board.reset();
-
-            expect(document.querySelector("#minesweeper-grid").innerHTML).toEqual("");
-        });
-
     });
 
     describe("Actions", function() {
@@ -76,16 +51,4 @@ describe("Minesweeper", function () {
     });
 
 });
-
-utils = {
-    clickOnCell: function(cell) {
-        var click = document.createEvent('Event');
-        click.initEvent('click', true, true);
-        cell.dispatchEvent(click);
-    },
-
-    cell: function cell(row, col) {
-        return document.querySelector("#cell-"+ row + "x" + col);
-    }
-};
 
