@@ -10,12 +10,16 @@ import java.io.IOException;
 
 public class MinesweeperChallengeTest {
 
-    Yose server ;
+    Yose server;
+    private MinesweeperPage minesweeperPage;
 
     @Before
-    public void startServer() throws IOException {
+    public void startServerAndNavigateToPage() throws IOException {
         server = new Yose(7001);
         server.start();
+
+        minesweeperPage = new MinesweeperPage();
+        minesweeperPage.go();
     }
 
     @After
@@ -25,51 +29,63 @@ public class MinesweeperChallengeTest {
 
     @Test
     public void displaysTheGrid() throws IOException {
-        MinesweeperPage minesweeperPage = new MinesweeperPage();
-        minesweeperPage.go();
         minesweeperPage.displaysTitle("Minesweeper");
         minesweeperPage.displaysGrid(8, 8);
     }
 
     @Test
     public void handlesBomb() throws InterruptedException {
-        MinesweeperPage minesweeperPage = new MinesweeperPage();
-        minesweeperPage.go();
         minesweeperPage.load(new String[][]{
                 {"empty", "empty"},
                 {"empty", "bomb"}
         });
         minesweeperPage.clickOnCell(1, 1);
-        minesweeperPage.cellHasClassName(1, 1, "lost");
+
+        minesweeperPage.cellIsTrapped(1, 1);
     }
 
     @Test
     public void handlesSafeCell() throws InterruptedException {
-        MinesweeperPage minesweeperPage = new MinesweeperPage();
-        minesweeperPage.go();
         minesweeperPage.load(new String[][]{
                 {"empty", "empty", "bomb"},
-                {"empty", "bomb",  "empty"},
+                {"empty", "bomb", "empty"},
                 {"empty", "empty", "empty"}
         });
+
         minesweeperPage.clickOnCell(1, 2);
+
         minesweeperPage.cellHasClassName(1, 2, "safe");
         minesweeperPage.cellContent(1, 2, "2");
     }
 
     @Test
     public void handlesSafeCellWithZeroBombAround() throws InterruptedException {
-        MinesweeperPage minesweeperPage = new MinesweeperPage();
-        minesweeperPage.go();
         minesweeperPage.load(new String[][]{
                 {"empty", "empty", "bomb" , "empty"},
                 {"empty", "bomb" , "empty", "empty"},
                 {"empty", "empty", "empty", "empty"},
                 {"empty", "empty", "empty", "empty"}
         });
+
         minesweeperPage.clickOnCell(3, 0);
-        minesweeperPage.cellHasClassName(3, 0, "safe");
-        minesweeperPage.cellContent(3, 0, "");
+
+        minesweeperPage.cellIsSafe(3, 0, "");
+    }
+
+    @Test
+    public void handlesOpenFieldCell() {
+        minesweeperPage.load(new String[][]{
+                {"bomb" , "empty", "empty"},
+                {"empty", "empty", "empty"},
+                {"empty", "empty", "bomb"}
+        });
+
+        minesweeperPage.clickOnCell(2, 0);
+
+        minesweeperPage.cellIsSafe(2, 0, "");
+        minesweeperPage.cellIsSafe(1, 0, "1");
+        minesweeperPage.cellIsSafe(1, 1, "2");
+        minesweeperPage.cellIsSafe(2, 1, "1");
     }
 
 }

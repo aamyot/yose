@@ -59,4 +59,13 @@ public class MinesweeperPage {
     public void cellContent(int row, int col, String content) {
         assertThat(element(id(cellId(row, col))).getText(), equalTo(content));
     }
+
+    public void cellIsSafe(int row, int col, String content) {
+        cellHasClassName(row, col, "safe");
+        cellContent(row, col, content);
+    }
+
+    public void cellIsTrapped(int row, int col) {
+        cellHasClassName(row, col, "lost");
+    }
 }

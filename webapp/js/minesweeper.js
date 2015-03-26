@@ -17,7 +17,7 @@ minesweeper.Board.prototype = {
         return board;
     },
 
-    render: function() {
+    render: function(container) {
         this.reset();
 
         var container = document.querySelector("#minesweeper-grid")
@@ -82,7 +82,10 @@ minesweeper.Cell.prototype = {
         this.elem.setAttribute("class", "safe");
 
         var bombsAround = this.bombsAround();
-        if (bombsAround > 0) {
+
+        if (bombsAround == 0) {
+            this.revealOpenField();
+        } else {
             this.elem.innerHTML = bombsAround;
         }
     },
@@ -107,6 +110,23 @@ minesweeper.Cell.prototype = {
         });
 
         return bombsCount;
+    },
+
+    revealOpenField: function() {
+        var around = [
+            [-1, -1], [-1, 0], [-1, +1],
+            [ 0, -1],          [ 0, +1],
+            [+1, -1], [+1, 0], [+1, +1]
+        ];
+        var self = this;
+        around.forEach(function(offset) {
+            var cell = board.cell(self.row + offset[0], self.col + offset[1]);
+            if (cell) {
+                if (cell.elem.className == "") {
+                    cell.markAsSafe()
+                }
+            }
+        });
     }
 };
 

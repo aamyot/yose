@@ -36,8 +36,7 @@ describe("Minesweeper", function () {
 
             utils.clickOnCell(cell);
 
-            expect(cell.className).toEqual("safe");
-            expect(cell.innerHTML).toEqual("2");
+            utils.assertCellIsSafe(4, 5, "2");
         });
 
         it('handles safe cell with no bomb around', function () {
@@ -45,8 +44,23 @@ describe("Minesweeper", function () {
 
             utils.clickOnCell(cell);
 
-            expect(cell.className).toEqual("safe");
-            expect(cell.innerHTML).toEqual("");
+            utils.assertCellIsSafe(5, 2, "");
+        });
+
+        it('reveals open field when a cell has no bomb', function() {
+            var grid =  [
+                ['bomb' , 'empty', 'empty'],
+                ['empty', 'empty', 'empty'],
+                ['empty', 'empty', 'bomb' ]
+            ];
+            board = new minesweeper.Board(grid);
+            board.render();
+
+            utils.clickOnCell(utils.cell(3, 1));
+
+            utils.assertCellIsSafe(2, 1, "1");
+            utils.assertCellIsSafe(2, 2, "2");
+            utils.assertCellIsSafe(3, 2, "1");
         });
     });
 
