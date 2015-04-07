@@ -1,26 +1,36 @@
 minesweeper = {};
 
 minesweeper.Board = function (grid) {
-    this.grid = grid || this.generateGrid();
+    this.cells = this.generate(grid || this.generateGrid());
 };
 
 minesweeper.Board.prototype = {
+    generate: function(grid) {
+        var cells = [];
+        for (var row = 0; row < grid.length; row++) {
+            cells.push([]);
+            for (var col = 0; col < grid[row].length; col++) {
+                var cell = new minesweeper.Cell(row, col, grid[row][col], this);
+                cells[row].push(cell);
+            }
+        }
+        return cells;
+    },
+
     render: function (container) {
         this.reset(container);
 
-        this.grid.forEach(function (line, row) {
+        for (var row = 0; row < this.cells.length; row++) {
             var tr = document.createElement('tr');
             container.appendChild(tr);
-
-            line.forEach(function (cell, col) {
-                tr.appendChild(this.createCell(row, col));
-            }.bind(this));
-        }.bind(this));
-
+            for (var col = 0; col < this.cells[row].length; col++) {
+                tr.appendChild(this.cells[row][col].render());
+            }
+        }
     },
 
     cellAt: function (row, col) {
-        return this.grid[row][col];
+        return this.cells[row][col];
     },
 
     generateGrid: function () {
@@ -36,75 +46,92 @@ minesweeper.Board.prototype = {
         return grid;
     },
 
-    createCell: function (row, col) {
-        var cell = document.createElement('td');
-        cell.setAttribute('id', this.cellId(row, col));
-        cell.addEventListener('click', function () {
-            this.reveal(row, col);
-        }.bind(this));
-        return cell;
-    },
-
-    cellId: function(row, col) {
-        return 'cell-' + (row + 1) + 'x' + (col + 1);
-    },
-
     cellIsValid: function(row, col) {
-        return (row >=0 && row < this.grid.length) &&
-            (col >= 0 && col < this.grid[row].length);
-    },
-
-    cellElementAt: function(row, col) {
-        return document.querySelector('#cell-' + (row + 1) + 'x' + (col + 1));
+        return (row >=0 && row < this.cells.length) &&
+               (col >= 0 && col < this.cells[row].length);
     },
 
     reset: function (container) {
         container.innerHTML = '';
+    }
+
+};
+
+minesweeper.Cell = function (row, col, state, board) {
+    this.row = row;
+    this.col = col;
+    this.state = state;
+    this.board = board;
+};
+
+minesweeper.Cell.prototype = {
+
+    render: function() {
+        this.elem = document.createElement('td');
+        this.elem.setAttribute('id', this.cellId());
+        this.elem.addEventListener('click', function () {
+            this.reveal();
+        }.bind(this));
+        return this.elem;
     },
 
-    reveal: function (row, col) {
-        var cell = this.cellElementAt(row, col);
+    cellId: function() {
+        return 'cell-' + (this.row + 1) + 'x' + (this.col + 1);
+    },
 
-        if (this.isTrapped(row, col)) {
-            cell.className = 'lost';
+    reveal: function() {
+        if (this.isTrapped()) {
+            this.lost();
             return;
         }
 
-        cell.className = 'safe';
+        this.safe();
 
-        var bombs = this.bombsAround(row, col);
-        if (bombs > 0) {
-            cell.innerHTML = bombs;
-        } else {
-            this.neighbours(row, col)
-                .filter(function(point) { return !this.isRevealed(point[0], point[1]); }.bind(this))
-                .forEach(function(point) { this.reveal(point[0], point[1]); }.bind(this));
+        if (this.bombsAround() == 0) {
+            this.neighbours()
+                .filter(function(cell) { return !cell.isRevealed(); })
+                .forEach(function(cell) { cell.reveal(); });
         }
     },
 
-    bombsAround: function (row, col) {
-        return this.neighbours(row, col)
-            .filter(function(point) { return this.isTrapped(point[0], point[1]); }.bind(this)).length;
+    isTrapped: function () {
+        return this.state == 'bomb';
     },
 
-    neighbours: function (row, col) {
+    lost: function() {
+        this.elem.className = 'lost';
+    },
+
+    safe: function() {
+        this.elem.className = 'safe';
+
+        var bombs = this.bombsAround();
+        if (bombs > 0) {
+            this.elem.innerHTML = bombs;
+        }
+    },
+
+    isRevealed: function () {
+        return this.elem.className != '';
+    },
+
+    neighbours: function () {
         var around = [
             [-1, -1], [-1, 0], [-1, +1],
             [ 0, -1],          [ 0, +1],
             [+1, -1], [+1, 0], [+1, +1]
         ];
 
-        return around.map(function(offset) { return [row+offset[0], col+offset[1]]; }.bind(this))
-            .filter(function(point) { return this.cellIsValid(point[0], point[1]); }.bind(this));
+        return around.map(function(offset) { return [this.row+offset[0], this.col+offset[1]]; }.bind(this))
+            .filter(function(coord) { return this.board.cellIsValid(coord[0], coord[1]); }.bind(this))
+            .map(function(coord) { return this.board.cellAt(coord[0], coord[1]) }.bind(this));
+
     },
 
-    isTrapped: function (row, col) {
-        return this.cellAt(row, col) == 'bomb';
-    },
-
-    isRevealed: function (row, col) {
-        return this.cellElementAt(row, col).className != '';
+    bombsAround: function () {
+        return this.neighbours()
+                   .filter(function(cell) { return cell.isTrapped(); }).length;
     }
-};
 
+};
 
