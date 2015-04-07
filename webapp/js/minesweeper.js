@@ -1,7 +1,8 @@
 minesweeper = {};
 
 minesweeper.Board = function (grid) {
-    this.cells = this.generate(grid || this.generateGrid());
+    document.grid = grid || this.generateGrid();
+    this.cells = this.generate(document.grid);
 };
 
 minesweeper.Board.prototype = {
