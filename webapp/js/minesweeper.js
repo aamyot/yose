@@ -39,7 +39,7 @@ minesweeper.Board.prototype = {
         for (var row = 0; row < 8; row++) {
             grid.push([]);
             for (var col = 0; col < 8; col++) {
-                grid[row].push('empty');
+                grid[row].push(Math.random() > 0.75 ? 'bomb' : 'empty');
             }
         }
 

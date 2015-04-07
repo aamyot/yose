@@ -51,6 +51,13 @@ describe('Minesweeper', function () {
         });
     });
 
+    it('generates a new grid every time it is being called', function() {
+        var board = new minesweeper.Board();
+        var next = new minesweeper.Board();
+
+        expect(board.cells).not.toEqual(next.cells);
+    });
+
     var cellAt = function(row, col) {
         return document.querySelector('#cell-' + row + 'x' + col);
     };
