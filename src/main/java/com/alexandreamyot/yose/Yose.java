@@ -51,6 +51,7 @@ public class Yose {
             get("/primeFactors/ui").to(primes::ui);
             get("/primeFactors/last").to(primes::last);
             get("/minesweeper").to(new Minesweeper(templates.named("minesweeper")));
+            get("/astroport").to(new Minesweeper(templates.named("astroport")));
         }};
     }
 
