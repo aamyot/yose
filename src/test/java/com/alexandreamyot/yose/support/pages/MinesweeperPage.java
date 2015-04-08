@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.id;
 
 public class MinesweeperPage {
@@ -67,5 +68,15 @@ public class MinesweeperPage {
 
     public void cellIsTrapped(int row, int col) {
         cellHasClassName(row, col, "lost");
+        cellContent(row, col, "");
+    }
+
+    public void cellIsSuspect(int row, int col) {
+        cellHasClassName(row, col, "suspect");
+        cellContent(row, col, "");
+    }
+
+    public void activateSuspectMode() {
+        element(cssSelector("input#suspect-mode[type=checkbox]")).click();
     }
 }

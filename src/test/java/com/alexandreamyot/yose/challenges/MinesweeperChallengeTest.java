@@ -54,8 +54,7 @@ public class MinesweeperChallengeTest {
 
         minesweeperPage.clickOnCell(1, 2);
 
-        minesweeperPage.cellHasClassName(1, 2, "safe");
-        minesweeperPage.cellContent(1, 2, "2");
+        minesweeperPage.cellIsSafe(1, 2, "2");
     }
 
     @Test
@@ -86,6 +85,20 @@ public class MinesweeperChallengeTest {
         minesweeperPage.cellIsSafe(1, 0, "1");
         minesweeperPage.cellIsSafe(1, 1, "2");
         minesweeperPage.cellIsSafe(2, 1, "1");
+    }
+
+    @Test
+    public void safeModeChallenge() {
+        minesweeperPage.load(new String[][]{
+                {"bomb" , "empty", "empty"},
+                {"empty", "empty", "empty"},
+                {"empty", "empty", "bomb"}
+        });
+        minesweeperPage.activateSuspectMode();
+
+        minesweeperPage.clickOnCell(0, 0);
+
+        minesweeperPage.cellIsSuspect(0, 0);
     }
 
 }

@@ -81,6 +81,11 @@ minesweeper.Cell.prototype = {
     },
 
     reveal: function() {
+        if (this.isSuspectModeActivated()) {
+            this.suspect();
+            return;
+        }
+
         if (this.isTrapped()) {
             this.lost();
             return;
@@ -112,6 +117,10 @@ minesweeper.Cell.prototype = {
         }
     },
 
+    suspect: function() {
+        this.elem.className = 'suspect';
+    },
+
     isRevealed: function () {
         return this.elem.className != '';
     },
@@ -132,6 +141,10 @@ minesweeper.Cell.prototype = {
     bombsAround: function () {
         return this.neighbours()
                    .filter(function(cell) { return cell.isTrapped(); }).length;
+    },
+
+    isSuspectModeActivated: function() {
+        return document.querySelector('#suspect-mode').checked;
     }
 
 };

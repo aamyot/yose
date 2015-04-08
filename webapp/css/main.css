@@ -35,3 +35,7 @@ table#minesweeper-grid td.lost {
 table#minesweeper-grid td.safe {
     background-color: lightgray;
 }
+
+table#minesweeper-grid td.suspect {
+    background-color: yellow;
+}

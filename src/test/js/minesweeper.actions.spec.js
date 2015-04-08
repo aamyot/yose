@@ -22,51 +22,56 @@ describe('Actions:', function() {
 
     });
 
-    describe('Actions', function() {
+    it('fails when a cell is trapped', function() {
 
-        it('fails when a cell is trapped', function() {
+        clickOnCell(2, 2);
 
-            clickOnCell(2, 2);
+        expect(document.querySelector('#cell-2x2').className).toEqual('lost');
+    });
 
-            expect(document.querySelector('#cell-2x2').className).toEqual('lost');
-        });
+    it('shows bombs around when a cell is safe', function() {
 
-        it('shows bombs around when a cell is safe', function() {
+        clickOnCell(1, 1);
 
-            clickOnCell(1, 1);
+        expect(document.querySelector('#cell-1x1').className).toEqual('safe');
+        expect(document.querySelector('#cell-1x1').innerHTML).toEqual('1');
+    });
 
-            expect(document.querySelector('#cell-1x1').className).toEqual('safe');
-            expect(document.querySelector('#cell-1x1').innerHTML).toEqual('1');
-        });
+    it('does not display 0 when there is no bomb around', function() {
+        clickOnCell(4, 4);
 
-        it('does not display 0 when there is no bomb around', function() {
-            clickOnCell(4, 4);
+        expect(document.querySelector('#cell-4x4').innerHTML).toEqual('');
+    });
 
-            expect(document.querySelector('#cell-4x4').innerHTML).toEqual('');
-        });
+    it('reveals open field when a cell has no bomb', function() {
+        var grid =  [
+            ['bomb' , 'empty', 'empty'],
+            ['empty', 'empty', 'empty'],
+            ['empty', 'empty', 'bomb' ]
+        ];
 
-        it('reveals open field when a cell has no bomb', function() {
-            var grid =  [
-                ['bomb' , 'empty', 'empty'],
-                ['empty', 'empty', 'empty'],
-                ['empty', 'empty', 'bomb' ]
-            ];
+        var board = new minesweeper.Board(grid);
+        board.render(document.querySelector('#minesweeper-grid'));
 
-            var board = new minesweeper.Board(grid);
-            board.render(document.querySelector('#minesweeper-grid'));
+        clickOnCell(3, 1);
 
-            clickOnCell(3, 1);
+        expect(document.querySelector('#cell-2x1').className).toEqual('safe');
+        expect(document.querySelector('#cell-2x1').innerHTML).toEqual('1');
 
-            expect(document.querySelector('#cell-2x1').className).toEqual('safe');
-            expect(document.querySelector('#cell-2x1').innerHTML).toEqual('1');
+        expect(document.querySelector('#cell-2x2').className).toEqual('safe');
+        expect(document.querySelector('#cell-2x2').innerHTML).toEqual('2');
 
-            expect(document.querySelector('#cell-2x2').className).toEqual('safe');
-            expect(document.querySelector('#cell-2x2').innerHTML).toEqual('2');
+        expect(document.querySelector('#cell-3x2').className).toEqual('safe');
+        expect(document.querySelector('#cell-3x2').innerHTML).toEqual('1');
+    });
 
-            expect(document.querySelector('#cell-3x2').className).toEqual('safe');
-            expect(document.querySelector('#cell-3x2').innerHTML).toEqual('1');
-        });
+    it('', function() {
+        activateSuspectMode();
 
+        clickOnCell(1, 1);
+
+        expect(document.querySelector('#cell-1x1').className).toEqual('suspect');
+        expect(document.querySelector('#cell-1x1').innerHTML).toEqual('');
     });
 
     var clickOnCell = function(row, col) {
@@ -74,5 +79,9 @@ describe('Actions:', function() {
         click.initEvent('click', true, true);
         document.querySelector('#cell-' + row + 'x' + col).dispatchEvent(click);
     };
+
+    var activateSuspectMode = function() {
+        document.querySelector('#suspect-mode').checked = true;
+    }
 
 });
