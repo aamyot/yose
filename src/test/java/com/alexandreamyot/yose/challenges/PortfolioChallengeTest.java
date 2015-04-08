@@ -48,4 +48,11 @@ public class PortfolioChallengeTest {
 
         assertThat(response).hasBodyText(containsString("<a id=\"prime-factors-decomposition-link\" href=\"/primeFactors/ui\">Prime Factors</a>"));
     }
+
+    @Test
+    public void includesALinkToTheMinesweeperChallenge() throws IOException {
+        HttpResponse response = request.get("/");
+
+        assertThat(response).hasBodyText(containsString("<a id=\"minesweeper-link\" href=\"/minesweeper\">Minesweeper</a>"));
+    }
 }
