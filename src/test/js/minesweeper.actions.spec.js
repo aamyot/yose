@@ -65,13 +65,27 @@ describe('Actions:', function() {
         expect(document.querySelector('#cell-3x2').innerHTML).toEqual('1');
     });
 
-    it('', function() {
-        activateSuspectMode();
+    describe('suspect mode', function() {
+        it('suspects a cell to be trapped', function() {
+            activateSuspectMode();
 
-        clickOnCell(1, 1);
+            clickOnCell(1, 1);
 
-        expect(document.querySelector('#cell-1x1').className).toEqual('suspect');
-        expect(document.querySelector('#cell-1x1').innerHTML).toEqual('');
+            expect(document.querySelector('#cell-1x1').className).toEqual('suspect');
+            expect(document.querySelector('#cell-1x1').innerHTML).toEqual('');
+        });
+
+        it('resets a suspected cell', function() {
+            activateSuspectMode();
+
+            clickOnCell(1, 1);
+
+            expect(document.querySelector('#cell-1x1').className).toEqual('suspect');
+
+            clickOnCell(1, 1);
+
+            expect(document.querySelector('#cell-1x1').className).toEqual('');
+        });
     });
 
     var clickOnCell = function(row, col) {

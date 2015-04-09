@@ -118,11 +118,16 @@ minesweeper.Cell.prototype = {
     },
 
     suspect: function() {
-        this.elem.className = 'suspect';
+        this.elem.className = this.isSuspected() ? '' : 'suspect';
+    },
+
+    isSuspected: function() {
+        return this.elem.className == 'suspect';
     },
 
     isRevealed: function () {
-        return this.elem.className != '';
+        return this.elem.className == 'safe' ||
+            this.elem.className == 'lost';
     },
 
     neighbours: function () {

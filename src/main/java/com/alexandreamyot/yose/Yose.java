@@ -56,7 +56,7 @@ public class Yose {
     }
 
     private StaticAssets staticAssets() {
-        return new StaticAssets(new FileServer(webroot)).serve("/css", "/js");
+        return new StaticAssets(new FileServer(webroot)).serve("/css", "/js", "/images");
     }
 
     public static void main(String[] args) throws IOException {
