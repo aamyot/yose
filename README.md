@@ -8,5 +8,5 @@ YoseTheGame
 
 Me playing [YoseTheGame](http://yosethegame.com)!
 
-Check it in action @ [http://yose-aamyot.heroku.com](http//:yose.alexandreamyot.com)
+Check it in action @ [http://yose-aamyot.heroku.com](http://yose.alexandreamyot.com)
 
