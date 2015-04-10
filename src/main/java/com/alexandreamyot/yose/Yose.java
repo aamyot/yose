@@ -1,9 +1,10 @@
 package com.alexandreamyot.yose;
 
-import com.alexandreamyot.yose.web.Home;
-import com.alexandreamyot.yose.web.Minesweeper;
-import com.alexandreamyot.yose.web.Ping;
-import com.alexandreamyot.yose.web.Primes;
+import com.alexandreamyot.yose.http.Fire;
+import com.alexandreamyot.yose.http.Home;
+import com.alexandreamyot.yose.http.Minesweeper;
+import com.alexandreamyot.yose.http.Ping;
+import com.alexandreamyot.yose.http.Primes;
 import com.vtence.molecule.WebServer;
 import com.vtence.molecule.middlewares.Failsafe;
 import com.vtence.molecule.middlewares.FileServer;
@@ -52,6 +53,7 @@ public class Yose {
             get("/primeFactors/last").to(primes::last);
             get("/minesweeper").to(new Minesweeper(templates.named("minesweeper")));
             get("/astroport").to(new Minesweeper(templates.named("astroport")));
+            get("/fire/geek").to(new Fire());
         }};
     }
 

@@ -1,4 +1,4 @@
-package com.alexandreamyot.yose.web;
+package com.alexandreamyot.yose.http;
 
 import com.alexandreamyot.yose.primes.IsNotGreaterThanOne;
 import com.alexandreamyot.yose.primes.IsTooBig;
