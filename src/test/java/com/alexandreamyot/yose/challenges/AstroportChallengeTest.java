@@ -31,4 +31,9 @@ public class AstroportChallengeTest {
     public void displaysTheNameOfTheAstroport() {
         astroportPagePage.displaysTheAstroportName("AstroYUL");
     }
+
+    @Test
+    public void displaysGatesWithShipNames() {
+        astroportPagePage.displaysGatesWithShipNames();
+    }
 }

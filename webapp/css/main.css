@@ -39,3 +39,15 @@ table#minesweeper-grid td.safe {
 table#minesweeper-grid td.suspect {
     background-image: url("../images/suspect.png");
 }
+
+ul#gates {
+    display: block;
+}
+
+ul#gates li {
+    display: inline-block;
+    list-style-type: none;
+    padding: 20px;
+    border: 1px solid;
+    width: 250px;
+}
