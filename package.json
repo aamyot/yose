@@ -16,7 +16,7 @@
     "url": "https://github.com/aamyot/yose/issues"
   },
   "devDependencies": {
-    "jasmine-node": "~1.14.5",
-    "domino": "~1.0.18"
+    "domino": "~1.0.18",
+    "jasmine-node": "~1.14.5"
   }
 }

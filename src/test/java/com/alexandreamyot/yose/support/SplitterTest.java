@@ -1,6 +1,5 @@
-package com.alexandreamyot.yose.fire;
+package com.alexandreamyot.yose.support;
 
-import com.alexandreamyot.yose.support.Splitter;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
