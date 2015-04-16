@@ -1,5 +1,6 @@
 package com.alexandreamyot.yose.fire;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
@@ -8,12 +9,35 @@ import static org.junit.Assert.assertThat;
 
 public class LandTest {
 
-    @Test
-    public void findsPlaneInALand() {
-        Land land = Land.parse(asList("...", "P..", ".WF"));
+    private Land land;
 
-        assertThat(land.findPlane(land), equalTo(new Point(0, 1)));
+    @Before
+    public void thisLand() throws Exception {
+        land = Land.parse(asList("...", "P..", ".WF"));
     }
 
+    @Test
+    public void parsesAListOfStringIntoALand() {
+        assertThat(Land.parse(asList("...", "P..", ".WF")).cells(), equalTo(new Character[][]{
+                                                                                    {'.', '.', '.'},
+                                                                                    {'P', '.', '.'},
+                                                                                    {'.', 'W', 'F'}
+                                                                            }));
+    }
+
+    @Test
+    public void findsPlane() {
+        assertThat(land.findPlane(), equalTo(new Point(1, 0)));
+    }
+
+    @Test
+    public void findsWater() {
+        assertThat(land.findWater(), equalTo(new Point(2, 1)));
+    }
+
+    @Test
+    public void findsFire() {
+        assertThat(land.findFire(), equalTo(new Point(2, 2)));
+    }
 
 }
