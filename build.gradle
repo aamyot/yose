@@ -35,10 +35,10 @@ def libs = [
         mockito      : 'org.mockito:mockito-all:1.10.19',
         junit        : 'junit:junit:4.11@jar',
         gson         : 'com.google.code.gson:gson:2.3.1',
-        selenium     : ['org.seleniumhq.selenium:selenium-api:2.44.0',
-                        'org.seleniumhq.selenium:selenium-remote-driver:2.44.0',
-                        'org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0',
-                        'org.seleniumhq.selenium:selenium-firefox-driver:2.44.0']
+        selenium     : ['org.seleniumhq.selenium:selenium-api:2.48.0',
+                        'org.seleniumhq.selenium:selenium-remote-driver:2.48.0',
+                        'org.seleniumhq.selenium:selenium-htmlunit-driver:2.48.0',
+                        'org.seleniumhq.selenium:selenium-firefox-driver:2.48.0']
 ]
 
 dependencies {
